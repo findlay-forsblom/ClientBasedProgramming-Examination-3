@@ -10,16 +10,18 @@
 </head>
 <body>
 
- <chat-app></chat-app>   
+ <chat-app></chat-app>  
+ 
 
 
 
   <template id ="msgBox">
     <style>
       .messageBox {
-      border: 1px solid black;
+      border: 0.2px solid black;
       width: 100%;
       display: flex;
+      padding: 0.8em 0.7em;
     }
 
     .content {
@@ -46,7 +48,7 @@
     <div class="messageBox">
       <img src="image/user.png" alt="user" class="user">
       <div class ="content">
-        <label id="user">Its Ur boi</label>
+        <label id="user"></label>
         <div id="message"></div>
       </div>
       </div>
@@ -99,7 +101,7 @@
 
     .subBox1 {
       border: 1px solid black;
-      height: 85%;
+      height: 90%;
       width: 100%;
       overflow-y: scroll;
       display: flex;

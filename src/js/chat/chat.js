@@ -4,15 +4,16 @@ class ChatApp extends HTMLElement {
     super()
     this.attachShadow({ mode: 'open' })
     this.storageIdentifier = 'chat_user'
+    this.connected = false
+    this.isLoggedIn = true
   }
 
   connectedCallback () {
     this.storage = window.localStorage
     // this.storage.clear()
     this.user = this.storage.getItem(this.storageIdentifier)
-    console.log(this.user)
-    console.log((Object.keys(this.user.length)))
-    if (this.user === null) {
+    console.log(this.isLoggedIn)
+    if (this.user === null || !this.isLoggedIn) {
       console.log('urnoi')
       const templ = document.getElementById('chatFront')
       this.shadowRoot.append(templ.content.cloneNode(true))
@@ -20,8 +21,8 @@ class ChatApp extends HTMLElement {
       console.log(templ)
       this._onNewUser(button)
     } else {
-      console.log('i am here lol')
       this._chat()
+      this.isLoggedIn = true
     }
   }
 
@@ -50,42 +51,80 @@ class ChatApp extends HTMLElement {
     }
   }
 
-  _chat () {
+  async _chat () {
     this.shadowRoot.innerHTML = ''
     const templ = document.getElementById('chatMain')
     this.shadowRoot.append(templ.content.cloneNode(true))
     const usernameOnNav = this.shadowRoot.querySelector('#userOnNav')
     usernameOnNav.textContent = this.storage.getItem(this.storageIdentifier)
-    console.log(usernameOnNav)
-    this._connect()
+    await this._connect()
+    if (this.connected === true) {
+      this._sendMessage()
+    }
+    this._listenForevents()
+  }
+
+  _listenForevents () {
+    const logout = this.shadowRoot.querySelector('#logout')
+    logout.addEventListener('click', function logOut () {
+      console.log('logging out')
+      this.isLoggedIn = false
+      this.disconnectedCallback()
+      this.connectedCallback()
+    }.bind(this))
+    console.log(logout)
   }
 
   _connect () {
     const subBox1 = this.shadowRoot.querySelector('.subBox1')
-    let message = {
+    this.message = {
       type: 'message',
-      data: 'lol',
-      username: 'urboi',
+      data: '',
+      username: this.storage.getItem(this.storageIdentifier),
       key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
     }
 
-    const socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
-    const bind = doThis.bind(this)
-    socket.onopen = function (event) {
-    // Send an initial message
-      message = JSON.stringify(message)
-      socket.send(message)
-    }
-
-    socket.addEventListener('message', bind)
-    function doThis (event) {
-      let recieved = event.data
-      recieved = JSON.parse(recieved)
-      console.log('Message from server ', recieved)
-      if (recieved.type !== 'heartbeat' && recieved.type !== 'notification') {
-        this._displayMessage(recieved, subBox1)
+    return new Promise((resolve, reject) => {
+      this.socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
+      const bind = doThis.bind(this)
+      this.socket.onopen = (event) => {
+      // Send an initial message
+        const send = JSON.stringify(this.message)
+        this.socket.send(send)
       }
-    }
+
+      this.socket.addEventListener('message', bind)
+      function doThis (event) {
+        let recieved = event.data
+        recieved = JSON.parse(recieved)
+        console.log('Message from server ', recieved)
+        if (recieved.data === 'You are connected!') {
+          console.log(this)
+          this.connected = true
+          resolve()
+        }
+        if (recieved.type !== 'heartbeat' && recieved.type !== 'notification') {
+          this._displayMessage(recieved, subBox1)
+        }
+      }
+    })
+  }
+
+  _sendMessage () {
+    const textArea = this.shadowRoot.querySelector('.message')
+    textArea.addEventListener('keyup', function key (event) {
+      if (event.key === 'Enter') {
+        const message = textArea.value.trim()
+        if (message.length !== 0) {
+          console.log('not zero')
+          console.log(message)
+          this.message.data = message
+          const send = JSON.stringify(this.message)
+          this.socket.send(send)
+        }
+      }
+    }.bind(this), true)
+    console.log(textArea)
   }
 
   _displayMessage (recieved, subBox1) {
@@ -93,13 +132,21 @@ class ChatApp extends HTMLElement {
     messageBox = messageBox.content.cloneNode(true)
     const message = messageBox.querySelector('#message')
     const user = messageBox.querySelector('#user')
+    if (recieved.username.trim().length > 0) {
+      user.textContent = recieved.username
+    } else {
+      user.textContent = 'Unknown'
+    }
     console.log(user)
-    message.textContent = recieved.data
-    subBox1.append(messageBox)
+    if (recieved.data.trim().length > 0) {
+      message.textContent = recieved.data
+      subBox1.append(messageBox)
+    }
   }
 
   disconnectedCallback () {
-
+    this.socket.close()
+    this.shadowRoot.innerHTML = ''
   }
 }
 
