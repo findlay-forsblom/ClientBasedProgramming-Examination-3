@@ -1,20 +1,286 @@
-<!doctype html>
-<html lang="">
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="description" content="">
-        <script type="module" src="js/app.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
 
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <p>Looks like you got the webserver up and running! Good job! Now it is time to
-         start working.
-        </p>
+ <chat-app></chat-app>   
 
-        <script nomodule src="build.js"></script>
-    </body>
+
+
+  <template id ="msgBox">
+    <style>
+      .messageBox {
+      border: 1px solid black;
+      width: 100%;
+      display: flex;
+    }
+
+    .content {
+      display: flex;
+      width: 85%;
+      flex-flow: column wrap;
+      margin-left: 0.7em;
+    }
+
+    #user {
+      display: block;
+      font-weight: 900;
+    }
+
+    .you {
+      background-color: rgba(252, 23, 23, 0.747);
+    }
+
+    .user {
+      width: 62px;
+      align-self: flex-start;
+    }
+    </style>
+    <div class="messageBox">
+      <img src="image/user.png" alt="user" class="user">
+      <div class ="content">
+        <label id="user">Its Ur boi</label>
+        <div id="message"></div>
+      </div>
+      </div>
+  </template>
+
+  <template id="chatMain">
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .wrapper {
+      border: 1px solid black;
+      height: 700px;
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .box1 {
+      width: 30%;
+      background-color: #800080;
+      align-self: stretch;
+      
+    }
+
+    .box2 {
+      align-self: stretch;
+      width: 70%;
+    }
+
+    .subWrapper {
+      border: 1px solid black;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      
+    }
+
+    .subBox1 {
+      border: 1px solid black;
+      height: 85%;
+      width: 100%;
+      overflow-y: scroll;
+      display: flex;
+      flex-flow: column nowrap; 
+      min-height: 0;
+    }
+
+
+    .subBox2 {
+      width: 100%;
+    }
+
+    .test {
+      border: 1px solid black;
+      margin-bottom: 0.5em;
+      
+    }
+
+    .broken-Fix-For-JustifyContent_flexend {
+      margin-top: auto;
+    }
+
+    .top {
+      color: white;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .yolo {
+      margin-left: 1em;
+    }
+
+    .topTop img {
+      width: 20%;
+      background-color: white;
+      margin-left: 0.8em;
+    }
+
+    .message {
+      display: block;
+      margin: auto;
+      margin-bottom: 0.7em;
+      width: 90%;
+      height: 50px;
+      resize: none;
+      border: 0.5px solid black;
+      
+    }
+
+    #logout, #channel {
+      display: block;
+      padding: 0.3em 0.5em;
+      border-radius: 5%;
+      cursor: pointer;
+      margin-top: 0.2em;
+    }
+
+
+    #channelInfo {
+      color: white;
+      font-size: 14px;
+      margin-top: 2em;
+      display: block;
+    }
+
+    #userOnNav {
+      color: white;
+      margin-top: 1em;
+      display: block;
+    }
+
+    </style>
+
+
+<div class="wrapper">
+    <div class= "box1">
+      <div class="yolo">
+        <div class="topTop">
+          <label class="top">Srack</label>
+          <img src="image/logo.png" alt="logo">
+        </div>
+        <label id="userOnNav">user</label>
+        <button id="logout">LogOut</button>
+        <label id="channelInfo">Current channel</label>
+        <button id="channel">Change channel</button>
+      </div>
+    </div>
+    <div class="box2">
+      <div class="subWrapper">
+        <div class="subBox1">
+          <div class="broken-Fix-For-JustifyContent_flexend"></div>   
+        </div>
+        <div class="subBox2">
+            <textarea name="Text1" class="message"></textarea>
+        </div>
+    </div>
+    </div>
+  </div>
+  </template>
+
+
+
+
+
+
+
+
+
+  <template id="chatFront">
+    <style>
+      *{
+      margin: 0;
+      box-sizing: border-box;
+    }
+    
+    .chat {
+      border: 1px solid black;
+      height: 700px;
+      width: 80%;
+    }
+
+    .home {
+      width: 60%;
+      margin: 15em auto;
+    }
+    .logo {
+      width: 77px;
+      display: inline-block;
+      position: relative;
+      left: 20%;
+    }
+
+    .home label {
+      font-size: 49px;
+      position: relative;
+      left: 17%;
+      bottom: 5px;
+
+    }
+    .username , .join{
+      display: block;
+      margin: auto;
+      font-size: 18px;
+    }
+    .tags {
+      margin-top: 1em;
+    }
+
+    .join {
+      margin-top: 0.4em;
+    }
+    .username {
+    border-radius: 5%;
+    border: 1px solid black;
+    text-align: center;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    #warning {
+      color: red;
+      text-align: center;
+      margin-top: 0.2em;
+    }
+    </style>
+    <div class="chat">
+      <div class="home">
+        <label>Srack</label>
+        <img src="./image/logo.png" alt="logo" class="logo">
+        <div class="tags">
+          <input type="text" class="username" placeholder="Enter username to chat">
+          <p id="warning" class="hide"></p>
+          <button class="join">Join</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+
+  <script nomodule src="build.js"></script>
+</body>
 </html>
