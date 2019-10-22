@@ -1,29 +1,51 @@
 import { User } from '../app.js'
-class ChatApp extends HTMLElement {
+export class ChatApp extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
-    this.storageIdentifier = 'chat_user'
+    this.storageIdentifier = 'chat-app_lastUser'
+    this.sessionId = null
     this.connected = false
     this.isLoggedIn = true
+    ChatApp.numberOfUsers = 0
+    ChatApp.currentUsers = []
+    ChatApp.localStorage = localStorage // stores all cureentUsers
+    ChatApp.storage = window.localStorage // stores last user
   }
 
   connectedCallback () {
-    this.storage = window.localStorage
+    // this.1 = window.localStorage
+    // console.log(this.constructor.getNumberOfUsers())
     // this.storage.clear()
-    this.user = this.storage.getItem(this.storageIdentifier)
-    console.log(this.isLoggedIn)
-    if (this.user === null || !this.isLoggedIn) {
+    this.user = ChatApp.storage.getItem(this.storageIdentifier)
+    if (this.isLoggedIn) {
+      // this.user = JSON.parse(this.user)
+    }
+    // this.user = JSON.parse(this.user)
+    console.log(this.user)
+    if (this.user.name === undefined || this.user.isLoggedIn) {
       console.log('urnoi')
       const templ = document.getElementById('chatFront')
       this.shadowRoot.append(templ.content.cloneNode(true))
       const button = this.shadowRoot.querySelector('button')
       console.log(templ)
       this._onNewUser(button)
-    } else {
+    } else if (!this.user.isLoggedIn) {
       this._chat()
       this.isLoggedIn = true
     }
+  }
+
+  static increase () {
+    ChatApp.numberOfUsers++
+  }
+
+  static decrease () {
+    ChatApp.numberOfUsers--
+  }
+
+  static getNumberOfUsers () {
+    return ChatApp.numberOfUsers
   }
 
   _onNewUser (button) {
@@ -33,11 +55,12 @@ class ChatApp extends HTMLElement {
     function doThis () {
       console.log(username.value)
       const p = this.shadowRoot.querySelector('#warning')
-      console.log(p)
+      console.log(username)
       if (username.value.length === 0) {
         console.log(p)
         p.textContent = 'Username can not be empty'
         p.classList.remove('hide')
+        return
       } else if (username.value.length < 3) {
         p.textContent = 'Username can be less than 3 characters'
         p.classList.remove('hide')
@@ -45,18 +68,28 @@ class ChatApp extends HTMLElement {
       }
       username = username.value
       this.user = new User(username)
-      console.log(username)
-      this.storage.setItem(this.storageIdentifier, username)
+      console.log('session id is ', this.sessionId)
+      // this.storage.setItem(this.storageIdentifier, JSON.stringify(this.user))
       this._chat()
     }
   }
 
   async _chat () {
+    this.user.isLoggedIn = true
+    ChatApp.currentUsers.push(this.user)
+    ChatApp.localStorage.setItem('currentUsers', JSON.stringify(ChatApp.currentUsers))
+    this.constructor.increase()
+    this.sessionId = ChatApp.getNumberOfUsers()
     this.shadowRoot.innerHTML = ''
     const templ = document.getElementById('chatMain')
     this.shadowRoot.append(templ.content.cloneNode(true))
     const usernameOnNav = this.shadowRoot.querySelector('#userOnNav')
-    usernameOnNav.textContent = this.storage.getItem(this.storageIdentifier)
+    let user = ChatApp.localStorage.getItem('currentUsers')
+    user = JSON.parse(user)
+    console.log(this.sessionId)
+    user = user[(this.sessionId) - 1].name
+    console.log(user)
+    usernameOnNav.textContent = user
     await this._connect()
     if (this.connected === true) {
       this._sendMessage()
@@ -77,10 +110,15 @@ class ChatApp extends HTMLElement {
 
   _connect () {
     const subBox1 = this.shadowRoot.querySelector('.subBox1')
+    this.user = ChatApp.localStorage.getItem('currentUsers')
+    // console.log(user)
+    this.user = JSON.parse(this.user)
+    this.user = this.user[(this.sessionId) - 1]
+
     this.message = {
       type: 'message',
       data: '',
-      username: this.storage.getItem(this.storageIdentifier),
+      username: this.user.name,
       key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
     }
 
@@ -133,7 +171,11 @@ class ChatApp extends HTMLElement {
     const message = messageBox.querySelector('#message')
     const user = messageBox.querySelector('#user')
     if (recieved.username.trim().length > 0) {
-      user.textContent = recieved.username
+      if (recieved.username === this.user.name) {
+        user.textContent = 'You'
+      } else {
+        user.textContent = recieved.username
+      }
     } else {
       user.textContent = 'Unknown'
     }
@@ -147,6 +189,11 @@ class ChatApp extends HTMLElement {
   disconnectedCallback () {
     this.socket.close()
     this.shadowRoot.innerHTML = ''
+    this.constructor.decrease()
+    const lastUser = ChatApp.currentUsers.pop()
+    lastUser.isLoggedIn = false
+    console.log(lastUser)
+    ChatApp.storage.setItem(this.storageIdentifier, JSON.stringify(lastUser))
   }
 }
 
