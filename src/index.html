@@ -9,27 +9,26 @@
   <title>Document</title>
 </head>
 <body>
-
- 
- <div class="drag"></div>
-
-
-
-
-
-
-
-
-
-
- 
+<div class="wrapper">
+  <div class="main"></div>
+  <footer>
+    <img src ="image/game.png" class="game" id="memoryGame" name="memory-Game">
+    <img src ="image/chat.png" class="game" id="chatapp" name ="chat-app">
+  </footer>
+</div>
+<template id="window">
+  <div class="drag">
+    <header id="top-Bar"></header>
+    <div id="innerBody"></div>
+    </div>
+</template>
   <template id ="msgBox">
     <style>
       .messageBox {
       border: 0.2px solid black;
       width: 100%;
       display: flex;
-      padding: 0.8em 0.7em;
+      padding: 0.1em 0.7em;
     }
 
     .content {
@@ -41,7 +40,8 @@
 
     #user {
       display: block;
-      font-weight: 900;
+      font-weight: 700;
+      font-size: 13px;
     }
 
     .you {
@@ -49,7 +49,7 @@
     }
 
     .user {
-      width: 62px;
+      width: 39px;
       align-self: flex-start;
     }
     </style>
@@ -78,9 +78,8 @@
     }
 
     .wrapper {
-      border: 1px solid black;
-      height: 700px;
-      width: 80%;
+      height: 98.5%;
+      width: 100%;
       display: flex;
       justify-content: space-between;
     }
@@ -104,22 +103,25 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      background-color: white;
       
     }
 
     .subBox1 {
-      border: 1px solid black;
       height: 90%;
       width: 100%;
       overflow-y: scroll;
       display: flex;
       flex-flow: column nowrap; 
       min-height: 0;
+      background-color: white;
+      margin-bottom: 0.5em;
     }
 
 
     .subBox2 {
       width: 100%;
+      background-color: white;
     }
 
     .test {
@@ -135,15 +137,16 @@
     .top {
       color: white;
       font-size: 30px;
-      font-weight: 900;
+      font-weight: 500;
     }
 
     .yolo {
       margin-left: 1em;
+      margin-top: 1em;
     }
 
     .topTop img {
-      width: 20%;
+      width: 35%;
       background-color: white;
       margin-left: 0.8em;
     }
@@ -152,11 +155,15 @@
       display: block;
       margin: auto;
       margin-bottom: 0.7em;
-      width: 90%;
-      height: 50px;
+      width: 95%;
+      height: 35px;
       resize: none;
       border: 0.5px solid black;
       
+    }
+
+    #message{
+      font-size: 13px;
     }
 
     #logout, #channel {
@@ -165,6 +172,7 @@
       border-radius: 5%;
       cursor: pointer;
       margin-top: 0.2em;
+      font-size: 8px;
     }
 
 
@@ -179,6 +187,7 @@
       color: white;
       margin-top: 1em;
       display: block;
+      font-size: 14px;
     }
 
     </style>
@@ -227,23 +236,24 @@
     
     .chat {
       border: 1px solid black;
-      height: 700px;
-      width: 80%;
+      width: 100%;
+      height: 100%;
+      background-color: white;
     }
 
     .home {
       width: 60%;
-      margin: 15em auto;
+      margin: 8em auto 0;
     }
     .logo {
-      width: 77px;
+      width: 56px;
       display: inline-block;
       position: relative;
       left: 20%;
     }
 
     .home label {
-      font-size: 49px;
+      font-size: 37px;
       position: relative;
       left: 17%;
       bottom: 5px;
@@ -252,7 +262,7 @@
     .username , .join{
       display: block;
       margin: auto;
-      font-size: 18px;
+      font-size: 14px;
     }
     .tags {
       margin-top: 1em;
@@ -282,7 +292,7 @@
         <label>Srack</label>
         <img src="./image/logo.png" alt="logo" class="logo">
         <div class="tags">
-          <input type="text" class="username" placeholder="Enter username to chat">
+          <input type="text" class="username" placeholder="Enter username">
           <p id="warning" class="hide"></p>
           <button class="join">Join</button>
         </div>
