@@ -5,13 +5,18 @@ export function User (user) {
   this.isLoggedIn = false
 }
 
-const body = document.querySelector('body')
+// const body = document.querySelector('body')
 const main = document.querySelector('.main')
+// main.addEventListener('click', function onClick () {
+//   console.log('its ur boi')
+// })
 console.log(main)
 const footer = document.querySelector('footer')
+// let div
+let currentDiv
+
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
-  let div
   let header
   if (clickedItem.tagName === 'IMG') {
     console.log('i am here boi')
@@ -20,14 +25,18 @@ footer.addEventListener('click', function onClick (event) {
     let templ = document.getElementById('window')
     templ = templ.content.cloneNode(true)
     console.log(app)
-    div = templ.querySelector('.drag')
+    const div = templ.querySelector('.drag')
     const innerBody = div.querySelector('#innerBody')
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
-    div.addEventListener('mousedown', mouseDown)
+    eventListener(div, header)
   }
 
+})
+
+function eventListener (div, header) {
+  div.addEventListener('mousedown', mouseDown, true)
   function mouseDown (e) {
     if (e.target !== header) {
       return
@@ -59,7 +68,11 @@ footer.addEventListener('click', function onClick (event) {
       this.window.removeEventListener('mouseup', mouseUp)
     })
   }
-})
+}
+
+
+
+
 
 
 /*
