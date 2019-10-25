@@ -13,35 +13,46 @@ const main = document.querySelector('.main')
 console.log(main)
 const footer = document.querySelector('footer')
 // let div
-let currentDiv
+const currentApps = []
+let zIndex = 0
 
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
   let header
   if (clickedItem.tagName === 'IMG') {
-    console.log('i am here boi')
     const name = clickedItem.getAttribute('name')
     const app = document.createElement(name)
     let templ = document.getElementById('window')
     templ = templ.content.cloneNode(true)
-    console.log(app)
     const div = templ.querySelector('.drag')
     const innerBody = div.querySelector('#innerBody')
+    div.style.zIndex = ++zIndex
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
     eventListener(div, header)
+    currentApps.push(div)
+    console.log(currentApps)
   }
 
 })
 
 function eventListener (div, header) {
+  main.addEventListener('click', function listening (e) {
+    let node = e.target
+    if (node.classList.contains('main')) {
+      return
+    }
+    if (!node.classList.contains('drag')) {
+      node = getParentNode(node)
+    }
+    node.style.zIndex = ++zIndex
+  })
   div.addEventListener('mousedown', mouseDown, true)
   function mouseDown (e) {
     if (e.target !== header) {
       return
     }
-    console.log('urboi is loistening')
     const rect = div.getBoundingClientRect()
     const prevX = e.clientX
     const prevY = e.clientY
@@ -62,7 +73,6 @@ function eventListener (div, header) {
     }
   
     window.addEventListener('mouseup', function mouseUp () {
-      this.console.log('final', div.getBoundingClientRect())
       this.window.removeEventListener('mousemove', mouseMove)
       this.window.removeEventListener('mousedown', mouseDown)
       this.window.removeEventListener('mouseup', mouseUp)
@@ -71,6 +81,14 @@ function eventListener (div, header) {
 }
 
 
+function getParentNode (node) {
+  const parent = node.parentNode
+  if (parent.classList.contains('drag')) {
+    return parent
+  } else {
+    return getParentNode(parent)
+  }
+}
 
 
 
