@@ -15,6 +15,8 @@ const footer = document.querySelector('footer')
 // let div
 let currentApps = []
 let zIndex = 0
+let lastX = 0
+let lastY = 0
 
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
@@ -31,6 +33,10 @@ footer.addEventListener('click', function onClick (event) {
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
+    div.style.top = `${lastY + 30}px`
+    div.style.left = `${lastX + 10}px`
+    lastX = div.getBoundingClientRect().x
+    lastY = div.getBoundingClientRect().y
     div.focus()
     eventListener(div, header)
     currentApps.push(div)
@@ -45,7 +51,6 @@ main.addEventListener('click', function listening (e) {
     return
   }
   if (node.getAttribute('id') === 'kryss') {
-    console.log('urmama')
     node = getParentNode(node)
     currentApps = currentApps.filter(item => item !== node)
     node.remove()
@@ -77,7 +82,7 @@ function eventListener (div, header) {
       const distanceMovedY = e.clientY - prevY
       div.style.left = `${rect.x + distanceMovedX}px`
       div.style.top = `${rect.y + distanceMovedY}px`
-      // console.log('getBoundingrect ', div.getBoundingClientRect())
+      console.log('getBoundingrect ', div.getBoundingClientRect())
       // console.log('X: ', e.clientX)
       // console.log('Y: ', e.clientY)
     }
@@ -88,6 +93,10 @@ function eventListener (div, header) {
       this.window.removeEventListener('mouseup', mouseUp)
       div.style.zIndex = ++zIndex
       div.focus()
+      lastX = div.getBoundingClientRect().x
+      lastY = div.getBoundingClientRect().y
+      this.console.log(lastX)
+      this.console.log(lastY)
     })
   }
 }
