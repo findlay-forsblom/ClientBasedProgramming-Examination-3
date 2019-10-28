@@ -6,7 +6,7 @@
 }
 
 .drag {
-  border: 7px solid #00A7E1;
+  border: 5px solid #00A7E1;
   border-radius: 5%;
   width: 350px;
   height: 450px;
@@ -14,6 +14,13 @@
   z-index: 1;
   overflow: hidden;
 
+}
+
+.drag:focus {
+  border: 7px solid #00A7E1;
+  border-radius: 5%;
+  box-shadow: 0 0 3pt 2pt red;
+  outline: none;  
 }
 
 .wrapper {
@@ -42,7 +49,7 @@
 
 #top-Bar {
   width: 100%;
-  height: 25px;
+  height: 20px;
   background: black;
   display: flex;
   justify-content: flex-end;

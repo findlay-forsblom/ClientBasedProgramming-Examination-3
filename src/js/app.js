@@ -13,7 +13,7 @@ const main = document.querySelector('.main')
 console.log(main)
 const footer = document.querySelector('footer')
 // let div
-const currentApps = []
+let currentApps = []
 let zIndex = 0
 
 footer.addEventListener('click', function onClick (event) {
@@ -26,10 +26,12 @@ footer.addEventListener('click', function onClick (event) {
     templ = templ.content.cloneNode(true)
     const div = templ.querySelector('.drag')
     const innerBody = div.querySelector('#innerBody')
+    div.setAttribute('tabindex', '0')
     div.style.zIndex = ++zIndex
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
+    div.focus()
     eventListener(div, header)
     currentApps.push(div)
     console.log(currentApps)
@@ -37,17 +39,25 @@ footer.addEventListener('click', function onClick (event) {
 
 })
 
+main.addEventListener('click', function listening (e) {
+  let node = e.target
+  if (node.classList.contains('main')) {
+    return
+  }
+  if (node.getAttribute('id') === 'kryss') {
+    console.log('urmama')
+    node = getParentNode(node)
+    currentApps = currentApps.filter(item => item !== node)
+    node.remove()
+    console.log(currentApps)
+  } else if (!node.classList.contains('drag')) {
+    node = getParentNode(node)
+  }
+  node.style.zIndex = ++zIndex
+  node.focus()
+})
+
 function eventListener (div, header) {
-  main.addEventListener('click', function listening (e) {
-    let node = e.target
-    if (node.classList.contains('main')) {
-      return
-    }
-    if (!node.classList.contains('drag')) {
-      node = getParentNode(node)
-    }
-    node.style.zIndex = ++zIndex
-  })
   div.addEventListener('mousedown', mouseDown, true)
   function mouseDown (e) {
     if (e.target !== header) {
@@ -76,6 +86,8 @@ function eventListener (div, header) {
       this.window.removeEventListener('mousemove', mouseMove)
       this.window.removeEventListener('mousedown', mouseDown)
       this.window.removeEventListener('mouseup', mouseUp)
+      div.style.zIndex = ++zIndex
+      div.focus()
     })
   }
 }

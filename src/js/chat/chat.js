@@ -187,7 +187,11 @@ export class ChatApp extends HTMLElement {
   }
 
   disconnectedCallback () {
-    this.socket.close()
+    console.log(this.isLoggedIn)
+    if (this.socket !== null) {
+      this.socket.close()
+      console.log('socket closed')
+    }
     this.shadowRoot.innerHTML = ''
     this.constructor.decrease()
     const lastUser = ChatApp.currentUsers.pop()
