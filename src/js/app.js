@@ -17,6 +17,7 @@ let currentApps = []
 let zIndex = 0
 let lastX = 0
 let lastY = 0
+const recents = document.querySelector('.recents')
 
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
@@ -33,7 +34,7 @@ footer.addEventListener('click', function onClick (event) {
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
-    div.style.top = `${lastY + 30}px`
+    div.style.top = `${lastY + 20}px`
     div.style.left = `${lastX + 10}px`
     lastX = div.getBoundingClientRect().x
     lastY = div.getBoundingClientRect().y
@@ -43,6 +44,10 @@ footer.addEventListener('click', function onClick (event) {
     console.log(currentApps)
   }
 
+})
+
+recents.addEventListener('mouseover', function onMouseOver () {
+  console.log('i am here boi')
 })
 
 main.addEventListener('click', function listening (e) {
@@ -59,7 +64,9 @@ main.addEventListener('click', function listening (e) {
     node = getParentNode(node)
   }
   node.style.zIndex = ++zIndex
-  node.focus()
+  lastX = node.getBoundingClientRect().x
+  lastY = node.getBoundingClientRect().y
+  // node.focus()
 })
 
 function eventListener (div, header) {

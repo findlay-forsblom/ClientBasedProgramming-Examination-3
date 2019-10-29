@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+body {
+  position: relative;
+}
+
 .drag {
   border: 5px solid #00A7E1;
   border-radius: 5%;
@@ -13,7 +17,6 @@
   position: absolute;
   z-index: 1;
   overflow: hidden;
-
 }
 
 .drag:focus {
@@ -32,6 +35,8 @@
 .main {
   height: 92%;
   background-color: rgba(0, 0, 0, 0.836);
+  overflow: hidden;
+  position: relative;
 }
 
 .wrapper footer {
@@ -39,6 +44,10 @@
   height: 8%;
   display: flex;
   background: #FDFFFC;
+}
+
+.recents {
+  margin-left: 4em;
 }
 
 .game {
