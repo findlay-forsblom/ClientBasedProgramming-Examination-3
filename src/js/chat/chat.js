@@ -1,4 +1,53 @@
 import { User } from '../app.js'
+
+const templMain = document.createElement('template')
+templMain.innerHTML = `
+<style>
+@import "js/chat/css/css1.css"
+</style>
+<div class="wrapper">
+  <div class= "box1">
+    <div class="yolo">
+      <div class="topTop">
+        <label class="top">Srack</label>
+        <img src="image/logo.png" alt="logo">
+      </div>
+      <label id="userOnNav">user</label>
+      <button id="logout">LogOut</button>
+      <label id="channelInfo">Current channel</label>
+      <button id="channel">Change channel</button>
+    </div>
+  </div>
+  <div class="box2">
+    <div class="subWrapper">
+      <div class="subBox1">
+        <div class="broken-Fix-For-JustifyContent_flexend"></div>   
+      </div>
+      <div class="subBox2">
+          <textarea name="Text1" class="message"></textarea>
+      </div>
+  </div>
+  </div>
+</div>
+`
+const templChatFront = document.createElement('template')
+templChatFront.innerHTML = `
+<style>
+@import "js/chat/css/css2.css"
+</style>
+<div class="chat">
+<div class="home">
+  <label>Srack</label>
+  <img src="./image/logo.png" alt="logo" class="logo">
+  <div class="tags">
+    <input type="text" class="username" placeholder="Enter username">
+    <p id="warning" class="hide"></p>
+    <button class="join">Join</button>
+  </div>
+</div>
+</div>
+`
+
 export class ChatApp extends HTMLElement {
   constructor () {
     super()
@@ -23,12 +72,11 @@ export class ChatApp extends HTMLElement {
     }
     // this.user = JSON.parse(this.user)
     console.log(this.user)
-    if (this.user.name === undefined || this.user.isLoggedIn) {
+    if (this.user === null || this.user.isLoggedIn) {
       console.log('urnoi')
-      const templ = document.getElementById('chatFront')
-      this.shadowRoot.append(templ.content.cloneNode(true))
+      // const templ = document.getElementById('chatFront')
+      this.shadowRoot.append(templChatFront.content.cloneNode(true))
       const button = this.shadowRoot.querySelector('button')
-      console.log(templ)
       this._onNewUser(button)
     } else if (!this.user.isLoggedIn) {
       this._chat()
@@ -75,14 +123,14 @@ export class ChatApp extends HTMLElement {
   }
 
   async _chat () {
-    this.user.isLoggedIn = true
+    // this.user.isLoggedIn = true
     ChatApp.currentUsers.push(this.user)
     ChatApp.localStorage.setItem('currentUsers', JSON.stringify(ChatApp.currentUsers))
     this.constructor.increase()
     this.sessionId = ChatApp.getNumberOfUsers()
     this.shadowRoot.innerHTML = ''
-    const templ = document.getElementById('chatMain')
-    this.shadowRoot.append(templ.content.cloneNode(true))
+    // const templ = document.getElementById('chatMain')
+    this.shadowRoot.append(templMain.content.cloneNode(true))
     const usernameOnNav = this.shadowRoot.querySelector('#userOnNav')
     let user = ChatApp.localStorage.getItem('currentUsers')
     user = JSON.parse(user)

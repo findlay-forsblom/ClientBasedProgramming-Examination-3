@@ -1,0 +1,95 @@
+.main {
+  border: 1px solid black;
+  height: 500px;
+  width: 60%;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  width: 87px;
+  height: 87px;
+  margin-right: 0.2em;
+  margin-bottom: 0.2em;
+  border: 1px solid black;
+  perspective: 1000px;
+  display: inline-block;
+}
+.container:focus {
+  box-shadow: 0 0 3pt 2pt red;
+  outline: none;
+}
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  overflow-y: scroll;
+}
+
+.game {
+  width: 90%;
+  margin: auto;
+  padding-top: 2em;
+}
+
+.box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+}
+
+.flip {
+  transform: rotateY(180deg)
+}
+.visible {
+  visibility: hidden;
+}
+
+.front, .back {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+}
+
+.front {
+  position: absolute;
+  background-color: white;
+  color: white;
+}
+
+.back {
+  position: absolute;
+  background-color:white;
+  color: white;
+  transform: rotateY(180deg)
+}
+
+.flex-rows {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.hide {
+  display: none;
+}
+
+p {
+  margin-top: 1em;
+  font-size: 18px;
+}
+
+#timer {
+  font-size: 20px;
+  margin-left: 0.3em;
+  font-weight: 700;
+}

@@ -13,13 +13,20 @@ body {
   border: 5px solid #00A7E1;
   border-radius: 5%;
   width: 350px;
-  height: 450px;
+  height: 500px;
   position: absolute;
   z-index: 1;
   overflow: hidden;
 }
 
 .drag:focus {
+  border: 7px solid #00A7E1;
+  border-radius: 5%;
+  box-shadow: 0 0 3pt 2pt red;
+  outline: none;  
+}
+
+.drag:focus-within {
   border: 7px solid #00A7E1;
   border-radius: 5%;
   box-shadow: 0 0 3pt 2pt red;

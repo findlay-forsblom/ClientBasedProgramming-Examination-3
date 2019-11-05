@@ -1,0 +1,122 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.notes {
+  width: 100%;
+  height: 100%;
+}
+
+.notes header {
+  width: 100%;
+  height: 40px;
+  background-color: #814032;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contents {
+  width: 100%;
+  height: 91%;
+  background-color: #FFE560;
+}
+
+.contents textarea {
+  width: 100%;
+  height: 100%;
+  background-color: #FFE560;
+  font-family: 'Schoolbell', arial, serif;
+  font-size: 1.2em;
+  resize: none;
+}
+
+header img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+header p {
+  padding-top: 0.1em;
+}
+
+p {
+  align-content: center;
+  color: white;
+  font-size: 25px;
+}
+
+.noteBox {
+  height: 50px;
+  border: 1px solid gray;
+  overflow: hidden;
+  display: flex;
+}
+
+.note {
+  padding-top: 0.5em;
+  font-size: 20px;
+  color: #6F2114;
+}
+
+.box {
+  width: 75%
+}
+
+.box2 {
+  width: 19%;
+  padding-top: 0.5em;
+}
+
+.box0 {
+  width: 5%;
+}
+
+
+
+.icon {
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: #612f24f6;
+  height: 25px;
+  margin-top: 0.2em;
+  margin-left: 0.3em;
+  cursor:pointer;
+}
+
+.time {
+  color: gray;
+  padding-right: 0.5em;
+  font-size: 20px;
+}
+
+.icon2 {
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: #612f24f6;
+  height: 28px;
+  margin-top: 0.3em;
+  margin-right: 0.3em;
+  cursor:pointer;
+}
+
+
+
+/*
+*/
+
+.title {
+  border: 1px solid red;
+  height: 10%;
+  font-family: 'Schoolbell', arial, serif;
+  font-size: 1.4em;
+}
+
+.body {
+  border: 1px solid red;
+  height: 90%;
+  font-size: 1.2em;
+}

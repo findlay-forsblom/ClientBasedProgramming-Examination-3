@@ -13,8 +13,9 @@
   <div class="main"></div>
   <footer>
     <div>
-      <img src ="image/game.png" class="game" id="memoryGame" name="memory-Game">
-      <img src ="image/chat.png" class="game" id="chatapp" name ="chat-app">
+      <img src ="image/game.png" alt="game" class="game" id="memoryGame" name="memory-Game">
+      <img src ="image/chat.png" alt="chat" class="game" id="chatapp" name ="chat-app">
+      <img src ="image/memo.png" alt="memo" class="game" id="chatapp" name ="note-app">
     </div>
     <div class="recents">
       <img src ="image/folder.png" class="game" id="chatapp" name ="recent">
@@ -24,6 +25,28 @@
     </div>
   </footer>
 </div>
+
+
+<template id ="main">
+  <div class="content">
+    <div class="game">
+      <section class="cards"></section>
+      <p>Time:<span id ="timer">0</span>s</p>
+      <button class="hide">Try again</button>
+    </div>
+  </div>
+</template>
+
+<template id="container">
+  <div class="container">
+    <div class="box">
+      <div class="front"></div>
+      <div class="back"></div>
+    </div>
+  </div>
+</template>
+
+
 <template id="window">
   <div class="drag">
     <header id="top-Bar">
@@ -33,6 +56,7 @@
     <div id="innerBody"></div>
     </div>
 </template>
+
   <template id ="msgBox">
     <style>
       .messageBox {
@@ -73,163 +97,7 @@
       </div>
   </template>
 
-  <template id="chatMain">
-    <style>
-      @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
-    *{
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 500;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    .wrapper {
-      height: 99.5%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .box1 {
-      width: 30%;
-      background-color: #800080;
-      align-self: stretch;
-      
-    }
-
-    .box2 {
-      align-self: stretch;
-      width: 70%;
-    }
-
-    .subWrapper {
-      border: 1px solid black;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background-color: white;
-      
-    }
-
-    .subBox1 {
-      height: 90%;
-      width: 100%;
-      overflow-y: scroll;
-      display: flex;
-      flex-flow: column nowrap; 
-      min-height: 0;
-      background-color: white;
-      margin-bottom: 0.5em;
-    }
-
-
-    .subBox2 {
-      width: 100%;
-      background-color: white;
-    }
-
-    .test {
-      border: 1px solid black;
-      margin-bottom: 0.5em;
-      
-    }
-
-    .broken-Fix-For-JustifyContent_flexend {
-      margin-top: auto;
-    }
-
-    .top {
-      color: white;
-      font-size: 30px;
-      font-weight: 500;
-    }
-
-    .yolo {
-      margin-left: 1em;
-      margin-top: 1em;
-    }
-
-    .topTop img {
-      width: 35%;
-      background-color: white;
-      margin-left: 0.8em;
-    }
-
-    .message {
-      display: block;
-      margin: auto;
-      margin-bottom: 0.7em;
-      width: 95%;
-      height: 35px;
-      resize: none;
-      border: 0.5px solid black;
-      
-    }
-
-    #message{
-      font-size: 13px;
-    }
-
-    #logout, #channel {
-      display: block;
-      padding: 0.3em 0.5em;
-      border-radius: 5%;
-      cursor: pointer;
-      margin-top: 0.2em;
-      font-size: 8px;
-    }
-
-
-    #channelInfo {
-      color: white;
-      font-size: 14px;
-      margin-top: 2em;
-      display: block;
-    }
-
-    #userOnNav {
-      color: white;
-      margin-top: 1em;
-      display: block;
-      font-size: 14px;
-    }
-
-    </style>
-
-
-<div class="wrapper">
-    <div class= "box1">
-      <div class="yolo">
-        <div class="topTop">
-          <label class="top">Srack</label>
-          <img src="image/logo.png" alt="logo">
-        </div>
-        <label id="userOnNav">user</label>
-        <button id="logout">LogOut</button>
-        <label id="channelInfo">Current channel</label>
-        <button id="channel">Change channel</button>
-      </div>
-    </div>
-    <div class="box2">
-      <div class="subWrapper">
-        <div class="subBox1">
-          <div class="broken-Fix-For-JustifyContent_flexend"></div>   
-        </div>
-        <div class="subBox2">
-            <textarea name="Text1" class="message"></textarea>
-        </div>
-    </div>
-    </div>
-  </div>
-  </template>
+  
 
 
 

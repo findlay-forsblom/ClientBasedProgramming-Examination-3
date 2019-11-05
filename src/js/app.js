@@ -1,4 +1,6 @@
-import { ChatApp } from './chat/chat.js'
+import './chat/chat.js'
+import './memory-game/memory-game.js'
+import './notes/note-app.js'
 
 export function User (user) {
   this.name = user
@@ -23,6 +25,7 @@ footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
   let header
   if (clickedItem.tagName === 'IMG') {
+    console.log(clickedItem)
     const name = clickedItem.getAttribute('name')
     const app = document.createElement(name)
     let templ = document.getElementById('window')
@@ -43,7 +46,6 @@ footer.addEventListener('click', function onClick (event) {
     currentApps.push(div)
     console.log(currentApps)
   }
-
 })
 
 recents.addEventListener('mouseover', function onMouseOver () {
@@ -78,22 +80,16 @@ function eventListener (div, header) {
     const rect = div.getBoundingClientRect()
     const prevX = e.clientX
     const prevY = e.clientY
-    // console.log(e.target)
-    // console.log(prevX)
-    // console.log(prevY)
-  
+
     window.addEventListener('mousemove', mouseMove)
-  
+
     function mouseMove (e) {
       const distanceMovedX = e.clientX - prevX
       const distanceMovedY = e.clientY - prevY
       div.style.left = `${rect.x + distanceMovedX}px`
       div.style.top = `${rect.y + distanceMovedY}px`
-      console.log('getBoundingrect ', div.getBoundingClientRect())
-      // console.log('X: ', e.clientX)
-      // console.log('Y: ', e.clientY)
     }
-  
+
     window.addEventListener('mouseup', function mouseUp () {
       this.window.removeEventListener('mousemove', mouseMove)
       this.window.removeEventListener('mousedown', mouseDown)
@@ -108,7 +104,6 @@ function eventListener (div, header) {
   }
 }
 
-
 function getParentNode (node) {
   const parent = node.parentNode
   if (parent.classList.contains('drag')) {
@@ -117,73 +112,3 @@ function getParentNode (node) {
     return getParentNode(parent)
   }
 }
-
-
-
-
-/*
-let templ = document.getElementById('window')
-templ = templ.content.cloneNode(true)
-
-const body = document.querySelector('body')
-console.log(body)
-const div = templ.querySelector('.drag')
-const header = div.querySelector('#top-Bar')
-const chat = document.createElement('chat-app')
-const innerBody = div.querySelector('#innerBody')
-body.append(div)
-innerBody.append(chat)
-console.log(header)
-console.log(div)
-
-div.addEventListener('mousedown', function mouseDown (e) {
-  if (e.target !== header) {
-    return
-  }
-  const rect = div.getBoundingClientRect()
-  const prevX = e.clientX
-  const prevY = e.clientY
-  console.log(e.target)
-  console.log(prevX)
-  console.log(prevY)
-
-  window.addEventListener('mousemove', mouseMove)
-
-  function mouseMove (e) {
-    const distanceMovedX = e.clientX - prevX
-    const distanceMovedY = e.clientY - prevY
-    div.style.left = `${rect.x + distanceMovedX}px`
-    div.style.top = `${rect.y + distanceMovedY}px`
-    console.log('getBoundingrect ', div.getBoundingClientRect())
-    console.log('X: ', e.clientX)
-    console.log('Y: ', e.clientY)
-  }
-
-  window.addEventListener('mouseup', function mouseUp () {
-    this.console.log('final' , div.getBoundingClientRect())
-    this.window.removeEventListener('mousemove', mouseMove)
-    this.window.removeEventListener('mousedown', mouseDown)
-    this.window.removeEventListener('mouseup', mouseUp)
-  })
-
-})
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-// const app = document.createElement('chat-app')
-// const app2 = document.createElement('chat-app')
-// document.querySelector('body').append(app)
-// document.querySelector('body').append(app2)
-// console.log(ChatApp.getNumberOfUsers())
