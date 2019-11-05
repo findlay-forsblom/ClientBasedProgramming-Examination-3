@@ -13,7 +13,7 @@ templMain.innerHTML = `
         <img src="image/logo.png" alt="logo">
       </div>
       <label id="userOnNav">user</label>
-      <button id="logout">LogOut</button>
+      <button id="logout">Change Username</button>
       <label id="channelInfo">Current channel</label>
       <button id="channel">Change channel</button>
     </div>
@@ -52,48 +52,33 @@ export class ChatApp extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
-    this.storageIdentifier = 'chat-app_lastUser'
+    this.storageIdentifier = 'chat-app_User-profile'
     this.sessionId = null
     this.connected = false
     this.isLoggedIn = true
-    ChatApp.numberOfUsers = 0
-    ChatApp.currentUsers = []
-    ChatApp.localStorage = localStorage // stores all cureentUsers
-    ChatApp.storage = window.localStorage // stores last user
+    // ChatApp.numberOfUsers = 0
+    // ChatApp.currentUsers = []
+    this.localStorage = localStorage // stores all cureentUsers
+    // ChatApp.storage = window.localStorage // stores last user
   }
 
   connectedCallback () {
     // this.1 = window.localStorage
     // console.log(this.constructor.getNumberOfUsers())
     // this.storage.clear()
-    this.user = ChatApp.storage.getItem(this.storageIdentifier)
-    if (this.isLoggedIn) {
-      // this.user = JSON.parse(this.user)
-    }
-    // this.user = JSON.parse(this.user)
-    console.log(this.user)
-    if (this.user === null || this.user.isLoggedIn) {
-      console.log('urnoi')
-      // const templ = document.getElementById('chatFront')
+    this.userProfile = this.localStorage.getItem(this.storageIdentifier)
+    this.userProfile = JSON.parse(this.userProfile)
+    if (this.userProfile === null || this.changeUsername) {
+      this.changeUsername = false
       this.shadowRoot.append(templChatFront.content.cloneNode(true))
       const button = this.shadowRoot.querySelector('button')
       this._onNewUser(button)
-    } else if (!this.user.isLoggedIn) {
+      // this.user = JSON.parse(this.user)
+    } else {
       this._chat()
-      this.isLoggedIn = true
     }
-  }
-
-  static increase () {
-    ChatApp.numberOfUsers++
-  }
-
-  static decrease () {
-    ChatApp.numberOfUsers--
-  }
-
-  static getNumberOfUsers () {
-    return ChatApp.numberOfUsers
+    // this.user = JSON.parse(this.user)
+    console.log(this.user)
   }
 
   _onNewUser (button) {
@@ -117,25 +102,25 @@ export class ChatApp extends HTMLElement {
       username = username.value
       this.user = new User(username)
       console.log('session id is ', this.sessionId)
-      // this.storage.setItem(this.storageIdentifier, JSON.stringify(this.user))
+      this.localStorage.setItem(this.storageIdentifier, JSON.stringify(this.user))
       this._chat()
     }
   }
 
   async _chat () {
     // this.user.isLoggedIn = true
-    ChatApp.currentUsers.push(this.user)
-    ChatApp.localStorage.setItem('currentUsers', JSON.stringify(ChatApp.currentUsers))
-    this.constructor.increase()
-    this.sessionId = ChatApp.getNumberOfUsers()
+    // ChatApp.currentUsers.push(this.user)
+    // ChatApp.localStorage.setItem('currentUsers', JSON.stringify(ChatApp.currentUsers))
+    // this.constructor.increase()
+    // this.sessionId = ChatApp.getNumberOfUsers()
     this.shadowRoot.innerHTML = ''
     // const templ = document.getElementById('chatMain')
     this.shadowRoot.append(templMain.content.cloneNode(true))
     const usernameOnNav = this.shadowRoot.querySelector('#userOnNav')
-    let user = ChatApp.localStorage.getItem('currentUsers')
+    let user = this.localStorage.getItem(this.storageIdentifier)
     user = JSON.parse(user)
     console.log(this.sessionId)
-    user = user[(this.sessionId) - 1].name
+    user = user.name
     console.log(user)
     usernameOnNav.textContent = user
     await this._connect()
@@ -149,8 +134,8 @@ export class ChatApp extends HTMLElement {
     const logout = this.shadowRoot.querySelector('#logout')
     logout.addEventListener('click', function logOut () {
       console.log('logging out')
-      this.isLoggedIn = false
       this.disconnectedCallback()
+      this.changeUsername = true
       this.connectedCallback()
     }.bind(this))
     console.log(logout)
@@ -158,10 +143,9 @@ export class ChatApp extends HTMLElement {
 
   _connect () {
     const subBox1 = this.shadowRoot.querySelector('.subBox1')
-    this.user = ChatApp.localStorage.getItem('currentUsers')
+    this.user = this.localStorage.getItem(this.storageIdentifier)
     // console.log(user)
     this.user = JSON.parse(this.user)
-    this.user = this.user[(this.sessionId) - 1]
 
     this.message = {
       type: 'message',
@@ -241,11 +225,6 @@ export class ChatApp extends HTMLElement {
       console.log('socket closed')
     }
     this.shadowRoot.innerHTML = ''
-    this.constructor.decrease()
-    const lastUser = ChatApp.currentUsers.pop()
-    lastUser.isLoggedIn = false
-    console.log(lastUser)
-    ChatApp.storage.setItem(this.storageIdentifier, JSON.stringify(lastUser))
   }
 }
 

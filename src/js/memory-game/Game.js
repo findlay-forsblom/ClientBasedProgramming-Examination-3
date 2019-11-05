@@ -40,6 +40,10 @@ export default function Game (gameSize, shadowRoot, arr, event, eventTarget, pla
         const frontPic = unknown.cloneNode()
         front.append(frontPic)
         div.append(container)
+        if (this.gameSize === '4x4') {
+          container.style.width = 70 + 'px'
+          container.style.height = 70 + 'px'
+        }
         index++
       }
     }

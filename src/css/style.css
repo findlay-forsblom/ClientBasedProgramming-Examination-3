@@ -6,7 +6,7 @@
 }
 
 body {
-  position: relative;
+  
 }
 
 .drag {
@@ -57,6 +57,10 @@ body {
   margin-left: 4em;
 }
 
+.hide {
+  display: none;
+}
+
 .game {
   width: 60px;
   cursor: pointer;
@@ -83,9 +87,44 @@ body {
   cursor: pointer;
 }
 
+#programs {
+  background-color: aqua;
+  height: 300px;
+  width: 250px;
+  position: absolute;
+  top: 370px;
+  overflow-y: scroll;
+  border: 2px solid gray;
+  border-radius: 5%;
+}
+
+#programs header {
+  height: 15px;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#programs .item {
+  height: 30px;
+  background-color: rgba(0, 169, 225, 0.582);
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid rgba(0, 153, 255, 0.897);
+}
+
 #minimize {
   height: 100%;
   width: 25px;
   background-color: yellow;
   cursor: pointer;
 }
+
+#close {
+  height: 100%;
+  width: 30px;
+  background-color: red;
+  cursor: pointer;
+}
+
