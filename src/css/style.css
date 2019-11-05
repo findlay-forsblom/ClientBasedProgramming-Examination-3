@@ -41,7 +41,7 @@ body {
 
 .main {
   height: 92%;
-  background-color: rgba(0, 0, 0, 0.836);
+  background-color: rgba(0, 0, 0, 0.932);
   overflow: hidden;
   position: relative;
 }
@@ -82,9 +82,13 @@ body {
 
 #kryss {
   height: 100%;
-  width: 40px;
+  width: 30px;
   background-color: red;
   cursor: pointer;
+}
+
+.programsBody {
+  overflow-y: hidden;
 }
 
 #programs {
@@ -116,7 +120,7 @@ body {
 
 #minimize {
   height: 100%;
-  width: 25px;
+  width: 16px;
   background-color: yellow;
   cursor: pointer;
 }

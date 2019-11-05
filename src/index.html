@@ -83,7 +83,7 @@
     #user {
       display: block;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 16px;
     }
 
     .you {
@@ -91,7 +91,7 @@
     }
 
     .user {
-      width: 39px;
+      width: 45px;
       align-self: flex-start;
     }
     </style>
@@ -103,90 +103,6 @@
       </div>
       </div>
   </template>
-
-  
-
-
-
-
-
-
-
-
-
-  <template id="chatFront">
-    <style>
-      *{
-      margin: 0;
-      box-sizing: border-box;
-    }
-    
-    .chat {
-      border: 1px solid black;
-      width: 100%;
-      height: 100%;
-      background-color: white;
-    }
-
-    .home {
-      width: 60%;
-      margin: 8em auto 0;
-    }
-    .logo {
-      width: 56px;
-      display: inline-block;
-      position: relative;
-      left: 20%;
-    }
-
-    .home label {
-      font-size: 37px;
-      position: relative;
-      left: 17%;
-      bottom: 5px;
-
-    }
-    .username , .join{
-      display: block;
-      margin: auto;
-      font-size: 14px;
-    }
-    .tags {
-      margin-top: 1em;
-    }
-
-    .join {
-      margin-top: 0.4em;
-    }
-    .username {
-    border-radius: 5%;
-    border: 1px solid black;
-    text-align: center;
-    }
-
-    .hide {
-      display: none;
-    }
-
-    #warning {
-      color: red;
-      text-align: center;
-      margin-top: 0.2em;
-    }
-    </style>
-    <div class="chat">
-      <div class="home">
-        <label>Srack</label>
-        <img src="./image/logo.png" alt="logo" class="logo">
-        <div class="tags">
-          <input type="text" class="username" placeholder="Enter username">
-          <p id="warning" class="hide"></p>
-          <button class="join">Join</button>
-        </div>
-      </div>
-    </div>
-  </template>
-  
 
   <script nomodule src="build.js"></script>
 </body>

@@ -13,7 +13,7 @@ body {
 }
 
 .wrapper {
-  height: 99.5%;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -32,7 +32,6 @@ body {
 }
 
 .subWrapper {
-  border: 1px solid black;
   width: 100%;
   height: 100%;
   display: flex;
@@ -76,14 +75,14 @@ body {
 }
 
 .yolo {
-  margin-left: 1em;
-  margin-top: 1em;
+  margin-left: 0.6em;
+  margin-top: 0.3em;
 }
 
 .topTop img {
   width: 35%;
   background-color: white;
-  margin-left: 0.8em;
+  margin-left: 1.2em;
 }
 
 .message {
@@ -98,10 +97,10 @@ body {
 }
 
 #message{
-  font-size: 13px;
+  font-size: 14px;
 }
 
-#logout, #channel {
+#logout {
   display: block;
   padding: 0.3em 0.5em;
   border-radius: 5%;
@@ -110,6 +109,11 @@ body {
   font-size: 8px;
 }
 
+#channel {
+  color: white;
+  font-size: 12px;
+  font-style: italic;
+}
 
 #channelInfo {
   color: white;
@@ -119,8 +123,9 @@ body {
 }
 
 #userOnNav {
-  color: white;
+  color: #CECECE;
   margin-top: 1em;
   display: block;
-  font-size: 14px;
+  font-size: 16px;
+  font-style: italic;
 }

@@ -15,7 +15,7 @@ templMain.innerHTML = `
       <label id="userOnNav">user</label>
       <button id="logout">Change Username</button>
       <label id="channelInfo">Current channel</label>
-      <button id="channel">Change channel</button>
+      <label id="channel">All channel</label>
     </div>
   </div>
   <div class="box2">
@@ -191,6 +191,7 @@ export class ChatApp extends HTMLElement {
           this.message.data = message
           const send = JSON.stringify(this.message)
           this.socket.send(send)
+          textArea.value = ''
         }
       }
     }.bind(this), true)
