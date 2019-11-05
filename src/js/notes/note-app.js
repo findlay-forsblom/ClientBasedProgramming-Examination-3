@@ -1,4 +1,3 @@
-
 const msgTemp = document.createElement('template')
 msgTemp.innerHTML = `
 <style>
@@ -47,6 +46,9 @@ templNoteNote.innerHTML = `
 </div>
 </div>
   `
+/*
+  The class for the note application
+  */
 
 class Notes extends HTMLElement {
   constructor () {
@@ -54,9 +56,11 @@ class Notes extends HTMLElement {
     this.attachShadow({ mode: 'open' })
     this.localStorageName = 'getNotes'
   }
+  /*
+  Checks for localstorage if there are notes that can be shown
+  */
 
   connectedCallback () {
-    // onst templ = document.getElementById('msgNotes')
     this.shadowRoot.appendChild(msgTemp.content.cloneNode(true))
     const img = this.shadowRoot.querySelector('img')
     this.localStorage = window.localStorage
@@ -67,8 +71,6 @@ class Notes extends HTMLElement {
       this.counter = 0
       notes = JSON.parse(notes)
       console.log(contents)
-      // const templ = document.getElementById('msgBox')
-      // console.log(templ)
       const span = this.shadowRoot.querySelector('span')
       console.log(span)
 
@@ -98,11 +100,14 @@ class Notes extends HTMLElement {
     console.log(this.counter)
   }
 
+  /*
+  Listens for different events
+  */
+
   _eventListener (img, contents) {
     img.addEventListener('click', function dothis () {
       console.log('click')
       this.shadowRoot.innerHTML = ''
-      // const templ = document.getElementById('noteNote')
       this.shadowRoot.appendChild(templNoteNote.content.cloneNode(true))
       this._savefile()
     }.bind(this))
@@ -153,6 +158,9 @@ class Notes extends HTMLElement {
       }
     }.bind(this))
   }
+  /*
+  Also listens for events
+  */
 
   _listener2 (title, body, index) {
     const header = this.shadowRoot.querySelector('header')
@@ -177,6 +185,9 @@ class Notes extends HTMLElement {
       }
     }.bind(this))
   }
+  /*
+  Saves a new note
+  */
 
   _savefile (index) {
     const save = this.shadowRoot.querySelector('#save')

@@ -2,6 +2,10 @@ import './chat/chat.js'
 import './memory-game/memory-game.js'
 import './notes/note-app.js'
 
+/*
+  Used by the Chat Application
+  */
+
 export function User (user) {
   this.name = user
   this.isLoggedIn = false
@@ -11,19 +15,21 @@ const main = document.querySelector('.main')
 console.log(main)
 const footer = document.querySelector('footer')
 const items = document.querySelector('#items')
-let minimizedApps = []
-const div = 
+const minimizedApps = []
 console.log(items)
 let currentApps = []
 let zIndex = 0
 let lastX = 0
 let lastY = 0
-let counter = 0
 let recents = document.querySelector('.recents')
 recents = recents.firstElementChild
 const miniWindow = document.querySelector('#programs')
 const body = miniWindow.querySelector('.programsBody')
 console.log(miniWindow)
+
+/*
+ footer eventlistener
+  */
 
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
@@ -47,7 +53,6 @@ footer.addEventListener('click', function onClick (event) {
     div.focus()
     eventListener(div, header)
     currentApps.push(div)
-    counter++
     console.log(currentApps)
   } else if (clickedItem === recents) {
     console.log('lol')
@@ -68,12 +73,6 @@ function minimize () {
       div.append(element.textContent)
       div.textContent = 'App ' + i
     }
-    // console.log(element)
-    // const item = items.content.cloneNode(true)
-    // body.append(item)
-    // const p = item.querySelector('p')
-    // console.log(item)
-    // p.textContent = 'App ' + counter
   })
 }
 
@@ -88,7 +87,6 @@ miniWindow.addEventListener('click', function onClick (event) {
     console.log(app)
     app.classList.remove('hide')
 
-   // minimizedApps = minimizedApps.filter(item => item !== app)
     const index = minimizedApps.indexOf(app)
     minimizedApps[index] = null
 
@@ -125,7 +123,6 @@ main.addEventListener('click', function listening (e) {
     currentApps = currentApps.filter(item => item !== node)
     node.remove()
     console.log(currentApps)
-    counter--
   } else if (node.getAttribute('id') === 'minimize') {
     node = getParentNode(node)
     node.classList.add('hide')
@@ -139,6 +136,10 @@ main.addEventListener('click', function listening (e) {
   lastY = node.getBoundingClientRect().y
   // node.focus()
 })
+/*
+  listens for events
+  Also responsible for moving the window
+  */
 
 function eventListener (div, header) {
   div.addEventListener('mousedown', mouseDown, true)

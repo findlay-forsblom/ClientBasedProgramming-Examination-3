@@ -33,11 +33,13 @@ templForSelect.innerHTML = `
   </div>
 </div>
 `
+/*
+  This is the main module for the memory game
+  */
 
 export class Memorygame extends HTMLElement {
   constructor () {
     super()
-    // this.templateForSize = document.getElementById('forSelect')
     this.attachShadow({ mode: 'open' })
   }
 
@@ -49,6 +51,9 @@ export class Memorygame extends HTMLElement {
     const button = this.shadowRoot.querySelector('button')
     this._onStart(button, element)
   }
+  /*
+  Listens and check for the game size selected by the user
+  */
 
   _onStart (button, element) {
     const bind = doThis.bind(this)
@@ -63,6 +68,10 @@ export class Memorygame extends HTMLElement {
     }
   }
 
+  /*
+  Gets and saves all images needed in an array
+  */
+
   _getAllImages () {
     const AllImages = []
     const path = './image/'
@@ -75,6 +84,10 @@ export class Memorygame extends HTMLElement {
     }
     return AllImages
   }
+
+  /*
+  Gets random card fromm the array depending on the game size
+  */
 
   _getCards (value) {
     const lol = this._getAllImages()
@@ -121,6 +134,10 @@ export class Memorygame extends HTMLElement {
     }
   }
 
+  /*
+  The method that starts the game when all images have been seletted from the array
+  */
+
   _startGame (size, arr) {
     this.arr = arr
     // const templ = document.getElementById('main')
@@ -135,6 +152,10 @@ export class Memorygame extends HTMLElement {
     game.start()
     this._gameController(game)
   }
+
+  /*
+  Controlls the Game
+  */
 
   _gameController (game) {
     const main = this.shadowRoot.querySelector('.cards')
@@ -315,6 +336,10 @@ export class Memorygame extends HTMLElement {
       return this._recurssionUp(current)
     }
   }
+
+  /*
+  Simple method for shuffling the array
+  */
 
   _shuffle (arr) {
     const newArr = arr

@@ -1,4 +1,8 @@
 import { unknown } from './functions.js'
+/*
+  A dependencie of memory-game module
+  Printing the game is its main objective
+  */
 export default function Game (gameSize, shadowRoot, arr, event, eventTarget, player) {
   this.gameSize = gameSize
   this.shadowRoot = shadowRoot
@@ -18,6 +22,10 @@ export default function Game (gameSize, shadowRoot, arr, event, eventTarget, pla
       matrixGen.call(this, 4, 2, main)
     }
   }
+
+  /*
+  Genereates the matrix dependinf on the given game size
+  */
 
   const matrixGen = function (rows, columns, main) {
     let index = 0
@@ -65,6 +73,10 @@ export default function Game (gameSize, shadowRoot, arr, event, eventTarget, pla
     main.append(h2)
     main.append(p)
   }
+
+  /*
+  When all the cards have been turned
+  */
 
   this.found = function (img) {
     foundImages.push(img)

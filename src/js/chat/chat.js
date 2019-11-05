@@ -47,7 +47,9 @@ templChatFront.innerHTML = `
 </div>
 </div>
 `
-
+/*
+The chatApp class
+*/
 export class ChatApp extends HTMLElement {
   constructor () {
     super()
@@ -56,16 +58,15 @@ export class ChatApp extends HTMLElement {
     this.sessionId = null
     this.connected = false
     this.isLoggedIn = true
-    // ChatApp.numberOfUsers = 0
-    // ChatApp.currentUsers = []
-    this.localStorage = localStorage // stores all cureentUsers
-    // ChatApp.storage = window.localStorage // stores last user
+    this.localStorage = localStorage
   }
+  /*
+  Checks if there is a user already in local storage.
+  If there is it feches the data of the user.
+  If there is not then it creates a new user
+  */
 
   connectedCallback () {
-    // this.1 = window.localStorage
-    // console.log(this.constructor.getNumberOfUsers())
-    // this.storage.clear()
     this.userProfile = this.localStorage.getItem(this.storageIdentifier)
     this.userProfile = JSON.parse(this.userProfile)
     if (this.userProfile === null || this.changeUsername) {
@@ -73,13 +74,15 @@ export class ChatApp extends HTMLElement {
       this.shadowRoot.append(templChatFront.content.cloneNode(true))
       const button = this.shadowRoot.querySelector('button')
       this._onNewUser(button)
-      // this.user = JSON.parse(this.user)
     } else {
       this._chat()
     }
-    // this.user = JSON.parse(this.user)
     console.log(this.user)
   }
+
+  /*
+  where the code jumps to if there is not a new user
+  */
 
   _onNewUser (button) {
     const bind = doThis.bind(this)
@@ -107,14 +110,12 @@ export class ChatApp extends HTMLElement {
     }
   }
 
+  /*
+  when there is a user that is ready to chat
+  */
+
   async _chat () {
-    // this.user.isLoggedIn = true
-    // ChatApp.currentUsers.push(this.user)
-    // ChatApp.localStorage.setItem('currentUsers', JSON.stringify(ChatApp.currentUsers))
-    // this.constructor.increase()
-    // this.sessionId = ChatApp.getNumberOfUsers()
     this.shadowRoot.innerHTML = ''
-    // const templ = document.getElementById('chatMain')
     this.shadowRoot.append(templMain.content.cloneNode(true))
     const usernameOnNav = this.shadowRoot.querySelector('#userOnNav')
     let user = this.localStorage.getItem(this.storageIdentifier)
@@ -140,11 +141,13 @@ export class ChatApp extends HTMLElement {
     }.bind(this))
     console.log(logout)
   }
+  /*
+ Connects to the socket
+  */
 
   _connect () {
     const subBox1 = this.shadowRoot.querySelector('.subBox1')
     this.user = this.localStorage.getItem(this.storageIdentifier)
-    // console.log(user)
     this.user = JSON.parse(this.user)
 
     this.message = {
@@ -158,7 +161,6 @@ export class ChatApp extends HTMLElement {
       this.socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
       const bind = doThis.bind(this)
       this.socket.onopen = (event) => {
-      // Send an initial message
         const send = JSON.stringify(this.message)
         this.socket.send(send)
       }
@@ -180,6 +182,10 @@ export class ChatApp extends HTMLElement {
     })
   }
 
+  /*
+  Sends message
+  */
+
   _sendMessage () {
     const textArea = this.shadowRoot.querySelector('.message')
     textArea.addEventListener('keyup', function key (event) {
@@ -197,6 +203,10 @@ export class ChatApp extends HTMLElement {
     }.bind(this), true)
     console.log(textArea)
   }
+
+  /*
+  Displays messages recieved by the socket
+  */
 
   _displayMessage (recieved, subBox1) {
     let messageBox = document.getElementById('msgBox')
@@ -218,6 +228,10 @@ export class ChatApp extends HTMLElement {
       subBox1.append(messageBox)
     }
   }
+
+  /*
+  What happens when the app is removed fron the dom
+  */
 
   disconnectedCallback () {
     console.log(this.isLoggedIn)
