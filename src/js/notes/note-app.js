@@ -173,8 +173,8 @@ class Notes extends HTMLElement {
       if (event.target.id === 'edit') {
         console.log('lol')
         this.disconnectedCallback()
-        const templ = document.getElementById('noteNote')
-        this.shadowRoot.appendChild(templ.content.cloneNode(true))
+        // const templ = document.getElementById('noteNote')
+        this.shadowRoot.appendChild(templNoteNote.content.cloneNode(true))
         const input = this.shadowRoot.querySelector('input')
         const text = this.shadowRoot.querySelector('textarea')
         input.value = title.innerHTML

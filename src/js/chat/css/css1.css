@@ -98,6 +98,7 @@ body {
 
 #message{
   font-size: 14.5px;
+  word-break: break-all;
 }
 
 #logout {

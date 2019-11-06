@@ -58,6 +58,7 @@ footer.addEventListener('click', function onClick (event) {
     console.log('lol')
     miniWindow.classList.remove('hide')
     console.log(body)
+    miniWindow.style.zIndex = ++zIndex
     minimize()
   }
 })
@@ -175,7 +176,7 @@ function eventListener (div, header) {
 }
 window.addEventListener('keydown', function (e) {
   // space and arrow keys
-  if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+  if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
     e.preventDefault()
   }
 }, false)
