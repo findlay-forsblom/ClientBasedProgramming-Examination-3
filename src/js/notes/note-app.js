@@ -18,7 +18,7 @@ msgTemp.innerHTML = `
 const templMsgBox = document.createElement('template')
 templMsgBox.innerHTML = `
 <div class="noteBox">
-  <div class="box0">
+  <div class="box0" title="remove note">
     <img src="./js/notes/images/cross.png" alt="lol">
   </div>
   <div class="box">
@@ -66,13 +66,10 @@ class Notes extends HTMLElement {
     this.localStorage = window.localStorage
     let notes = this.localStorage.getItem(this.localStorageName)
     const contents = this.shadowRoot.querySelector('.contents')
-    console.log(notes)
     if (notes !== null) {
       this.counter = 0
       notes = JSON.parse(notes)
-      console.log(contents)
       const span = this.shadowRoot.querySelector('span')
-      console.log(span)
 
       notes.forEach(element => {
         this.counter++
@@ -80,16 +77,11 @@ class Notes extends HTMLElement {
         const note = msgBox.querySelector('.note')
         const time = msgBox.querySelector('.time')
         contents.appendChild(msgBox)
-        console.log(note)
-        console.log(time)
         note.innerHTML = element.title
         time.innerHTML = element.time
         element.id = this.counter
         const lol = note.parentNode.parentNode
         lol.setAttribute('id', this.counter)
-        console.log(lol)
-        console.log(element)
-        console.log(note)
         span.innerHTML = this.counter
       })
 
@@ -97,7 +89,6 @@ class Notes extends HTMLElement {
       this.localStorage.setItem(this.localStorageName, notes)
     }
     this._eventListener(img, contents)
-    console.log(this.counter)
   }
 
   /*
@@ -106,7 +97,6 @@ class Notes extends HTMLElement {
 
   _eventListener (img, contents) {
     img.addEventListener('click', function dothis () {
-      console.log('click')
       this.shadowRoot.innerHTML = ''
       this.shadowRoot.appendChild(templNoteNote.content.cloneNode(true))
       this._savefile()
@@ -147,7 +137,6 @@ class Notes extends HTMLElement {
         let index
         arr.forEach((element, i) => {
           const lol = element.id
-          console.log(lol)
           if (num === lol) {
             index = i
           }
@@ -166,12 +155,10 @@ class Notes extends HTMLElement {
     const header = this.shadowRoot.querySelector('header')
     header.addEventListener('click', function onClick (event) {
       if (event.target.id === 'back') {
-        console.log('lol')
         this.disconnectedCallback()
         this.connectedCallback()
       }
       if (event.target.id === 'edit') {
-        console.log('lol')
         this.disconnectedCallback()
         // const templ = document.getElementById('noteNote')
         this.shadowRoot.appendChild(templNoteNote.content.cloneNode(true))
@@ -180,8 +167,6 @@ class Notes extends HTMLElement {
         input.value = title.innerHTML
         text.value = body.innerHTML
         this._savefile(index)
-        console.log(title.innerHTML)
-        console.log(body.innerHTML)
       }
     }.bind(this))
   }
@@ -194,7 +179,6 @@ class Notes extends HTMLElement {
     const bind = onClick.bind(this)
     const input = this.shadowRoot.querySelector('input')
     const text = this.shadowRoot.querySelector('textarea')
-    console.log(input)
     save.addEventListener('click', bind)
     function onClick () {
       if (input.value.length !== 0) {
@@ -207,52 +191,39 @@ class Notes extends HTMLElement {
         } else {
           time = hours + ':' + minuites + ' AM'
         }
-        console.log(time)
-        console.log(input.value)
-        console.log(text.value)
         this._upload(input.value, text.value, index, time)
         input.value = ''
         text.value = ''
       }
       save.removeEventListener('click', bind)
     }
-    console.log(save)
   }
 
   _upload (title, body, id, time) {
     let notes = this.localStorage.getItem(this.localStorageName)
     notes = JSON.parse(notes)
-    console.log('i am here bror ', notes)
     const newNote = {
       title: title,
       body: body,
       time: time
     }
-    console.log(id)
     if (id !== undefined) {
-      console.log(typeof id)
       notes.forEach((element, i) => {
-        const num = element.id
-        console.log(typeof num)
         if (element.id === id) {
           element.title = title
           element.body = body
-          console.log('i am here bror')
         }
       })
       notes = JSON.stringify(notes)
-      console.log(notes)
       this.localStorage.setItem(this.localStorageName, notes)
     } else {
       if (notes === null) {
         let arr = []
         arr.push(newNote)
         arr = JSON.stringify(arr)
-        console.log(arr)
         this.localStorage.setItem(this.localStorageName, arr)
       } else {
         notes.push(newNote)
-        console.log(notes)
         notes = JSON.stringify(notes)
         this.localStorage.setItem(this.localStorageName, notes)
       }

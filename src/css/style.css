@@ -51,6 +51,7 @@ body {
   height: 8%;
   display: flex;
   background: #FDFFFC;
+  padding-left: 1em;
 }
 
 .recents {
@@ -61,11 +62,24 @@ body {
   display: none;
 }
 
+.boxes {
+  display: inline-block;
+}
+
+
 .game {
-  width: 60px;
+  width: 55px;
   cursor: pointer;
   margin-right: 1em;
 }
+
+.game:hover{
+  transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+ -ms-transform: scale(1.2, 1.2);
+ -webkit-transform: scale(1.2, 1.2);
+ -o-transform: scale(1.2, 1.2);
+ }
 
 #top-Bar {
   width: 100%;
@@ -83,7 +97,8 @@ body {
 #kryss {
   height: 100%;
   width: 30px;
-  background-color: red;
+  background-color: rgba(12, 10, 10, 0);
+  border: 6px solid red;
   cursor: pointer;
 }
 
@@ -93,10 +108,10 @@ body {
 
 #programs {
   background-color: aqua;
-  height: 300px;
-  width: 250px;
+  height: 150px;
+  width: 130px;
   position: absolute;
-  top: 400px;
+  top: 72.5%;
   overflow-y: scroll;
   border: 2px solid gray;
   border-radius: 5%;
@@ -120,15 +135,9 @@ body {
 
 #minimize {
   height: 100%;
-  width: 16px;
-  background-color: yellow;
-  cursor: pointer;
-}
-
-#close {
-  height: 100%;
-  width: 30px;
-  background-color: red;
+  width: 29px;
+  background-color: black;
+  border: 6px solid yellow;
   cursor: pointer;
 }
 

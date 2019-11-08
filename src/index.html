@@ -13,18 +13,18 @@
   <div class="main"></div>
   <footer>
     <div>
-      <img src ="image/game.png" alt="game" class="game" id="memoryGame" name="memory-Game">
-      <img src ="image/chat.png" alt="chat" class="game" id="chatapp" name ="chat-app">
-      <img src ="image/memo.png" alt="memo" class="game" id="chatapp" name ="note-app">
+      <div class="boxes" data-app="memory-game" title="Memory Game"><img src ="image/game.png" alt="game" class="game" id="memoryGame"  title="Memory Gane"></div>
+      <div class="boxes" data-app="chat-app" title="Chat App"><img src ="image/chat.png" alt="chat" class="game" id="chatapp" title="Chat App"></div>
+      <div class="boxes" data-app="note-app" title="Notes App"><img src ="image/memo.png" alt="memo" class="game" id="noteapp" title="Notes App"></div>
     </div>
-    <div class="recents">
-      <img src ="image/folder.png" class="game" id="chatapp" name ="recent">
+    <div class="recents" data-app="recent" title="minimized programs">
+      <img src ="image/folder.png" class="game" id="recent" alt="recents">
     </div>
     <div>
       <div id="programs" class="hide">
-        <header>
+        <!-- <header>
           <div id="close"></div>
-        </header>
+        </header> -->
         <div class="programsBody"></div>
       </div>
     </div>
@@ -55,10 +55,10 @@
 
 
 <template id="window">
-  <div class="drag">
+  <div class="drag" >
     <header id="top-Bar">
-      <div id="minimize"></div>
-      <div id="kryss"></div>
+      <div id="minimize" title="minimize"></div>
+      <div id="kryss" title="close"></div>
     </header>
     <div id="innerBody"></div>
     </div>

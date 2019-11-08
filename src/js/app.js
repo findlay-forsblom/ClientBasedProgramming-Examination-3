@@ -12,20 +12,17 @@ export function User (user) {
 }
 
 const main = document.querySelector('.main')
-console.log(main)
 const footer = document.querySelector('footer')
-const items = document.querySelector('#items')
 const minimizedApps = []
-console.log(items)
 let currentApps = []
 let zIndex = 0
 let lastX = 0
 let lastY = 0
+let focusedApps = []
 let recents = document.querySelector('.recents')
 recents = recents.firstElementChild
 const miniWindow = document.querySelector('#programs')
 const body = miniWindow.querySelector('.programsBody')
-console.log(miniWindow)
 
 /*
  footer eventlistener
@@ -34,14 +31,16 @@ console.log(miniWindow)
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
   let header
+  miniWindow.classList.add('hide')
   if (clickedItem.tagName === 'IMG' && clickedItem !== recents) {
-    const name = clickedItem.getAttribute('name')
+    const name = clickedItem.parentNode.getAttribute('data-app')
     const app = document.createElement(name)
     let templ = document.getElementById('window')
     templ = templ.content.cloneNode(true)
     const div = templ.querySelector('.drag')
     const innerBody = div.querySelector('#innerBody')
     div.setAttribute('tabindex', '0')
+    div.setAttribute('data-name', clickedItem.parentNode.getAttribute('title'))
     div.style.zIndex = ++zIndex
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
@@ -53,11 +52,8 @@ footer.addEventListener('click', function onClick (event) {
     div.focus()
     eventListener(div, header)
     currentApps.push(div)
-    console.log(currentApps)
   } else if (clickedItem === recents) {
-    console.log('lol')
-    miniWindow.classList.remove('hide')
-    console.log(body)
+    miniWindow.classList.toggle('hide')
     miniWindow.style.zIndex = ++zIndex
     minimize()
   }
@@ -71,51 +67,68 @@ function minimize () {
       div.classList.add('item')
       div.setAttribute('data', `${i}`)
       body.append(div)
-      div.append(element.textContent)
-      div.textContent = 'App ' + i
+      const dataName = element.getAttribute('data-name')
+      div.textContent = dataName
     }
   })
 }
 
 miniWindow.addEventListener('click', function onClick (event) {
-  console.log(event.target)
   if (event.target.classList.contains('item')) {
-    console.log('lol')
+    if (focusedApps.length > 0) {
+      focusedApps.forEach(element => {
+        element.classList.add('hide')
+      })
+    }
+    focusedApps = []
     const div = event.target
     const id = div.getAttribute('data')
-    console.log(id)
     const app = minimizedApps[id]
-    console.log(app)
     app.classList.remove('hide')
 
     const index = minimizedApps.indexOf(app)
     minimizedApps[index] = null
 
-    app.style.top = `${lastY + 20}px`
-    app.style.left = `${lastX + 10}px`
     lastX = app.getBoundingClientRect().x
     lastY = app.getBoundingClientRect().y
 
     app.style.zIndex = ++zIndex
     app.focus()
-
     div.remove()
-    console.log(id)
   }
   if (event.target.getAttribute('id') === 'close') {
-    console.log('yea')
     miniWindow.classList.add('hide')
   }
   miniWindow.style.zIndex = ++zIndex
 })
 
-recents.addEventListener('mouseover', function onMouseOver () {
-  console.log('i am here boi')
+miniWindow.addEventListener('mouseover', function onMouseOver (event) {
+  let app
+  if (event.target.classList.contains('item')) {
+    const index = event.target.getAttribute('data')
+    app = minimizedApps[index]
+    app.classList.remove('hide')
+    app.setAttribute('data-focus', 'true')
+    app.focus()
+    app.style.zIndex = ++zIndex
+    if (!focusedApps.includes(app)) {
+      focusedApps.push(app)
+    }
+  }
+  miniWindow.addEventListener('mouseleave', function onMouseLeave () {
+    if (focusedApps.length > 0) {
+      focusedApps.forEach(element => {
+        element.classList.add('hide')
+      })
+    }
+    focusedApps = []
+    miniWindow.removeEventListener('mouseleave', onMouseLeave)
+  })
 })
 
 main.addEventListener('click', function listening (e) {
   let node = e.target
-  console.log(node)
+  miniWindow.classList.add('hide')
   if (node.classList.contains('main')) {
     return
   }
@@ -123,7 +136,6 @@ main.addEventListener('click', function listening (e) {
     node = getParentNode(node)
     currentApps = currentApps.filter(item => item !== node)
     node.remove()
-    console.log(currentApps)
   } else if (node.getAttribute('id') === 'minimize') {
     node = getParentNode(node)
     node.classList.add('hide')
@@ -135,7 +147,6 @@ main.addEventListener('click', function listening (e) {
   node.style.zIndex = ++zIndex
   lastX = node.getBoundingClientRect().x
   lastY = node.getBoundingClientRect().y
-  // node.focus()
 })
 /*
   listens for events
@@ -175,7 +186,6 @@ function eventListener (div, header) {
   }
 }
 window.addEventListener('keydown', function (e) {
-  // space and arrow keys
   if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
     e.preventDefault()
   }

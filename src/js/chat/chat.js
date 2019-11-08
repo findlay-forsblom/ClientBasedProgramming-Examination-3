@@ -77,7 +77,6 @@ export class ChatApp extends HTMLElement {
     } else {
       this._chat()
     }
-    console.log(this.user)
   }
 
   /*
@@ -89,11 +88,8 @@ export class ChatApp extends HTMLElement {
     button.addEventListener('click', bind, true)
     let username = this.shadowRoot.querySelector('.username')
     function doThis () {
-      console.log(username.value)
       const p = this.shadowRoot.querySelector('#warning')
-      console.log(username)
       if (username.value.length === 0) {
-        console.log(p)
         p.textContent = 'Username can not be empty'
         p.classList.remove('hide')
         return
@@ -104,7 +100,6 @@ export class ChatApp extends HTMLElement {
       }
       username = username.value
       this.user = new User(username)
-      console.log('session id is ', this.sessionId)
       this.localStorage.setItem(this.storageIdentifier, JSON.stringify(this.user))
       this._chat()
     }
@@ -120,9 +115,7 @@ export class ChatApp extends HTMLElement {
     const usernameOnNav = this.shadowRoot.querySelector('#userOnNav')
     let user = this.localStorage.getItem(this.storageIdentifier)
     user = JSON.parse(user)
-    console.log(this.sessionId)
     user = user.name
-    console.log(user)
     usernameOnNav.textContent = user
     await this._connect()
     if (this.connected === true) {
@@ -134,12 +127,10 @@ export class ChatApp extends HTMLElement {
   _listenForevents () {
     const logout = this.shadowRoot.querySelector('#logout')
     logout.addEventListener('click', function logOut () {
-      console.log('logging out')
       this.disconnectedCallback()
       this.changeUsername = true
       this.connectedCallback()
     }.bind(this))
-    console.log(logout)
   }
   /*
  Connects to the socket
@@ -192,8 +183,6 @@ export class ChatApp extends HTMLElement {
       if (event.key === 'Enter') {
         const message = textArea.value.trim()
         if (message.length !== 0) {
-          console.log('not zero')
-          console.log(message)
           this.message.data = message
           const send = JSON.stringify(this.message)
           this.socket.send(send)
@@ -201,7 +190,6 @@ export class ChatApp extends HTMLElement {
         }
       }
     }.bind(this), true)
-    console.log(textArea)
   }
 
   /*
@@ -222,7 +210,6 @@ export class ChatApp extends HTMLElement {
     } else {
       user.textContent = 'Unknown'
     }
-    console.log(user)
     if (recieved.data.trim().length > 0) {
       message.textContent = recieved.data
       subBox1.append(messageBox)
@@ -234,10 +221,8 @@ export class ChatApp extends HTMLElement {
   */
 
   disconnectedCallback () {
-    console.log(this.isLoggedIn)
     if (this.socket !== null) {
       this.socket.close()
-      console.log('socket closed')
     }
     this.shadowRoot.innerHTML = ''
   }

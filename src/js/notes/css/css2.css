@@ -54,6 +54,7 @@ p {
   border: 1px solid gray;
   overflow: hidden;
   display: flex;
+  padding-left: 1em;
 }
 
 .note {
@@ -74,8 +75,6 @@ p {
 .box0 {
   width: 5%;
 }
-
-
 
 .icon {
   border: 1px solid black;
@@ -104,19 +103,18 @@ p {
 }
 
 
-
 /*
 */
 
 .title {
-  border: 1px solid red;
+  border: 1px solid black;
   height: 10%;
   font-family: 'Schoolbell', arial, serif;
   font-size: 1.4em;
 }
 
 .body {
-  border: 1px solid red;
+  border: 1px solid black;
   height: 90%;
   font-size: 1.2em;
 }

@@ -56,6 +56,7 @@ p {
   border: 1px solid gray;
   overflow: hidden;
   display: flex;
+  padding-left: 1em;
 }
 
 .note {
@@ -86,7 +87,6 @@ p {
 
 .time {
   color: gray;
-  padding-right: 0.1em;
   padding-top: 0.3em;
   font-size: 15px;
 }
@@ -101,7 +101,7 @@ p {
 }
 
 .box0 img {
-  width: 30px;
-  padding-top: 0.5em;
+  width: 27px;
+  padding-top: 0.7em;
   cursor: pointer;
 }
