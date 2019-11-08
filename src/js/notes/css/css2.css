@@ -111,10 +111,12 @@ p {
   height: 10%;
   font-family: 'Schoolbell', arial, serif;
   font-size: 1.4em;
+  padding: 0.4em 0.4em;
 }
 
 .body {
   border: 1px solid black;
   height: 90%;
   font-size: 1.2em;
+  padding: 0.4em 0.4em;
 }

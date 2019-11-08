@@ -18,6 +18,7 @@ let currentApps = []
 let zIndex = 0
 let lastX = 0
 let lastY = 0
+let bottom = false
 let focusedApps = []
 let recents = document.querySelector('.recents')
 recents = recents.firstElementChild
@@ -45,8 +46,19 @@ footer.addEventListener('click', function onClick (event) {
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
-    div.style.top = `${lastY + 20}px`
-    div.style.left = `${lastX + 10}px`
+    console.log('lastY', lastY)
+    console.log('lastX', lastX)
+    if (bottom) {
+      div.style.top = `${lastY - 20}px`
+      div.style.left = `${lastX + 10}px`
+    } else {
+      div.style.top = `${lastY + 20}px`
+      div.style.left = `${lastX + 10}px`
+    }
+    checkIfTouched(div.getBoundingClientRect().bottom, main.getBoundingClientRect().bottom)
+    if (div.getBoundingClientRect().top < 0) {
+      bottom = false
+    }
     lastX = div.getBoundingClientRect().x
     lastY = div.getBoundingClientRect().y
     div.focus()
@@ -178,10 +190,22 @@ function eventListener (div, header) {
       this.window.removeEventListener('mouseup', mouseUp)
       div.style.zIndex = ++zIndex
       div.focus()
+      if (div.getBoundingClientRect().y < 0) {
+        this.console.log('it happened')
+        div.style.top = `${10}px`
+      }
       lastX = div.getBoundingClientRect().x
       lastY = div.getBoundingClientRect().y
+      const mains = main.getBoundingClientRect()
+      const lastBottomDiv = div.getBoundingClientRect().bottom
+      const lastBottomMain = mains.bottom
+
       this.console.log(lastX)
       this.console.log(lastY)
+      this.console.log(div.getBoundingClientRect())
+      this.console.log(mains)
+      this.console.log()
+      checkIfTouched(lastBottomDiv, lastBottomMain, div)
     })
   }
 }
@@ -197,5 +221,17 @@ function getParentNode (node) {
     return parent
   } else {
     return getParentNode(parent)
+  }
+}
+
+function checkIfTouched (lastBottomDiv, lastBottomMain, div) {
+  if (lastBottomDiv - lastBottomMain > 390) {
+    console.log('higher love')
+    bottom = true
+  }
+  if (lastBottomDiv - lastBottomMain > 490) {
+    console.log('higher love')
+    bottom = true
+    div.style.top = 590 + 'px'
   }
 }
