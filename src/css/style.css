@@ -40,7 +40,7 @@ body {
 }
 
 .main {
-  height: 92%;
+  height: 95%;
   background-color: rgba(0, 0, 0, 0.932);
   overflow: hidden;
   position: relative;
@@ -48,7 +48,6 @@ body {
 
 .wrapper footer {
   border: 1px solid rgb(128, 0, 0);
-  height: 8%;
   display: flex;
   background: #FDFFFC;
   padding-left: 1em;
@@ -114,7 +113,7 @@ body {
   width: 130px;
   position: absolute;
   top: 73%;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 2px solid gray;
   border-radius: 5%;
 }

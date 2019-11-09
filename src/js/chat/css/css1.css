@@ -44,7 +44,7 @@ body {
 .subBox1 {
   height: 90%;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-flow: column nowrap; 
   min-height: 0;
