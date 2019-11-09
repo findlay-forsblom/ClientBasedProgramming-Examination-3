@@ -62,6 +62,7 @@ footer.addEventListener('click', function onClick (event) {
     }
     lastX = div.getBoundingClientRect().x
     lastY = div.getBoundingClientRect().y
+    checkIfTouchedSides(main.getBoundingClientRect(), div)
     div.focus()
     eventListener(div, header)
     currentApps.push(div)
@@ -206,7 +207,10 @@ function eventListener (div, header) {
       const mains = main.getBoundingClientRect()
       const lastBottomDiv = div.getBoundingClientRect().bottom
       const lastBottomMain = mains.bottom
+      this.console.log(div.getBoundingClientRect())
+      this.console.log(mains)
       checkIfTouched(lastBottomDiv, lastBottomMain, div)
+      checkIfTouchedSides(mains, div)
     })
   }
 }
@@ -222,6 +226,14 @@ function getParentNode (node) {
     return parent
   } else {
     return getParentNode(parent)
+  }
+}
+
+function checkIfTouchedSides (mains, div) {
+  if (div.getBoundingClientRect().right - mains.right > 132 ) {
+    lastX = 5
+    lastY = 10
+    console.log('lol')
   }
 }
 

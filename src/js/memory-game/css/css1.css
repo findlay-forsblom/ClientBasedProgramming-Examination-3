@@ -41,7 +41,7 @@ button {
 }
 
 .game {
-  width: 90%;
+  width: 95%;
   margin: auto;
   padding-top: 2em;
 }
@@ -103,4 +103,5 @@ p {
   font-size: 20px;
   margin-left: 0.3em;
   font-weight: 700;
+  color:red;
 }
