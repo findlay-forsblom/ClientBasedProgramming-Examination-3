@@ -114,6 +114,7 @@ miniWindow.addEventListener('click', function onClick (event) {
     }
   }
   miniWindow.style.zIndex = ++zIndex
+  miniWindow.classList.add('hide')
 })
 
 miniWindow.addEventListener('mouseover', function onMouseOver (event) {
