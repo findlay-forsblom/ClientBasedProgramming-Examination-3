@@ -40,7 +40,7 @@ body {
 }
 
 .main {
-  height: 95%;
+  height: 96%;
   background-color: rgba(0, 0, 0, 0.932);
   overflow: hidden;
   position: relative;
@@ -112,7 +112,7 @@ body {
   height: 150px;
   width: 130px;
   position: absolute;
-  top: 73%;
+  bottom: 66px;
   overflow-y: auto;
   border: 2px solid gray;
   border-radius: 5%;
