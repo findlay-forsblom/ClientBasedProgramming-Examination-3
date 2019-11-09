@@ -9,9 +9,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+button {
+  display: block;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  padding: 0.3em 0.4em;
+  border-radius: 10%;
+  background-color: black;
+  color: white;
+}
+
 .container {
-  width: 95px;
-  height: 95px;
+  width: 100px;
+  height: 100px;
   margin-right: 0.2em;
   margin-bottom: 0.2em;
   border: 1px solid black;
@@ -27,6 +37,7 @@
   height: 100%;
   background-color: white;
   overflow-y: scroll;
+  background-color: #d8d8d8;
 }
 
 .game {

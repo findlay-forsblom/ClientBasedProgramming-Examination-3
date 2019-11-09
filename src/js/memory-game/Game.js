@@ -49,8 +49,11 @@ export default function Game (gameSize, shadowRoot, arr, event, eventTarget, pla
         front.append(frontPic)
         div.append(container)
         if (this.gameSize === '4x4') {
-          container.style.width = 70 + 'px'
-          container.style.height = 70 + 'px'
+          container.style.width = 72 + 'px'
+          container.style.height = 72 + 'px'
+        } else if (this.gameSize === '2x4') {
+          container.style.width = 80 + 'px'
+          container.style.height = 80 + 'px'
         }
         index++
       }

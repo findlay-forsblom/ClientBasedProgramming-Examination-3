@@ -20,10 +20,13 @@ let lastX = 0
 let lastY = 0
 let bottom = false
 let focusedApps = []
+let count = 0
 let recents = document.querySelector('.recents')
 recents = recents.firstElementChild
 const miniWindow = document.querySelector('#programs')
 const body = miniWindow.querySelector('.programsBody')
+const numberOfApp = document.querySelector('#numbers')
+console.log(numberOfApp)
 
 /*
  footer eventlistener
@@ -46,8 +49,6 @@ footer.addEventListener('click', function onClick (event) {
     header = div.querySelector('#top-Bar')
     innerBody.append(app)
     main.append(div)
-    console.log('lastY', lastY)
-    console.log('lastX', lastX)
     if (bottom) {
       div.style.top = `${lastY - 20}px`
       div.style.left = `${lastX + 10}px`
@@ -107,9 +108,10 @@ miniWindow.addEventListener('click', function onClick (event) {
     app.style.zIndex = ++zIndex
     app.focus()
     div.remove()
-  }
-  if (event.target.getAttribute('id') === 'close') {
-    miniWindow.classList.add('hide')
+    numberOfApp.textContent = --count
+    if (count === 0) {
+      numberOfApp.classList.add('hide')
+    }
   }
   miniWindow.style.zIndex = ++zIndex
 })
@@ -123,6 +125,7 @@ miniWindow.addEventListener('mouseover', function onMouseOver (event) {
     app.setAttribute('data-focus', 'true')
     app.focus()
     app.style.zIndex = ++zIndex
+    miniWindow.style.zIndex = ++zIndex
     if (!focusedApps.includes(app)) {
       focusedApps.push(app)
     }
@@ -152,6 +155,8 @@ main.addEventListener('click', function listening (e) {
     node = getParentNode(node)
     node.classList.add('hide')
     minimizedApps.push(node)
+    numberOfApp.classList.remove('hide')
+    numberOfApp.textContent = ++count
     minimize()
   } else if (!node.classList.contains('drag')) {
     node = getParentNode(node)
@@ -190,21 +195,17 @@ function eventListener (div, header) {
       this.window.removeEventListener('mouseup', mouseUp)
       div.style.zIndex = ++zIndex
       div.focus()
+
       if (div.getBoundingClientRect().y < 0) {
         this.console.log('it happened')
         div.style.top = `${10}px`
       }
+
       lastX = div.getBoundingClientRect().x
       lastY = div.getBoundingClientRect().y
       const mains = main.getBoundingClientRect()
       const lastBottomDiv = div.getBoundingClientRect().bottom
       const lastBottomMain = mains.bottom
-
-      this.console.log(lastX)
-      this.console.log(lastY)
-      this.console.log(div.getBoundingClientRect())
-      this.console.log(mains)
-      this.console.log()
       checkIfTouched(lastBottomDiv, lastBottomMain, div)
     })
   }
@@ -225,12 +226,10 @@ function getParentNode (node) {
 }
 
 function checkIfTouched (lastBottomDiv, lastBottomMain, div) {
-  if (lastBottomDiv - lastBottomMain > 390) {
-    console.log('higher love')
+  if (lastBottomDiv - lastBottomMain > 350) {
     bottom = true
   }
   if (lastBottomDiv - lastBottomMain > 490) {
-    console.log('higher love')
     bottom = true
     div.style.top = 590 + 'px'
   }

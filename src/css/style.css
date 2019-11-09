@@ -12,8 +12,8 @@ body {
 .drag {
   border: 5px solid #00A7E1;
   border-radius: 5%;
-  width: 350px;
-  height: 500px;
+  width: 323px;
+  height: 450px;
   position: absolute;
   z-index: 1;
   overflow: hidden;
@@ -112,7 +112,7 @@ body {
   height: 150px;
   width: 130px;
   position: absolute;
-  top: 72.5%;
+  top: 73%;
   overflow-y: scroll;
   border: 2px solid gray;
   border-radius: 5%;
@@ -145,9 +145,9 @@ body {
 #numbers {
   color: red;
   position: absolute;
-  right: 0px;
+  right: -7px;
   top: 0px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 900;
 }
 
