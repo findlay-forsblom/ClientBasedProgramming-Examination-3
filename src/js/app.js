@@ -35,7 +35,6 @@ console.log(numberOfApp)
 footer.addEventListener('click', function onClick (event) {
   const clickedItem = event.target
   let header
-  miniWindow.classList.add('hide')
   if (clickedItem.tagName === 'IMG' && clickedItem !== recents) {
     const name = clickedItem.parentNode.getAttribute('data-app')
     const app = document.createElement(name)
