@@ -46,19 +46,23 @@ templNoteNote.innerHTML = `
 </div>
 </div>
   `
-/*
-  The class for the note application
-  */
-
+/**
+ * Class representing a note application
+ * Can make a new note, edit an existing note and delete a note
+ *
+ * @author Findlay Forsblom <ff222ey@student.lnu.se>
+ * @class
+ */
 class Notes extends HTMLElement {
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
     this.localStorageName = 'getNotes'
   }
-  /*
-  Checks for localstorage if there are notes that can be shown
-  */
+
+  /**
+   * Checks for localstorage if there are notes that can be shown
+   */
 
   connectedCallback () {
     this.shadowRoot.appendChild(msgTemp.content.cloneNode(true))
@@ -91,9 +95,11 @@ class Notes extends HTMLElement {
     this._eventListener(img, contents)
   }
 
-  /*
-  Listens for different events
-  */
+  /**
+   * Adds event listeners to parametised objects
+   * @param {object} img - Icon for new note
+   * @param {object} contents - Parent dom elemnt where all notes are placed
+   */
 
   _eventListener (img, contents) {
     img.addEventListener('click', function dothis () {
@@ -101,6 +107,7 @@ class Notes extends HTMLElement {
       this.shadowRoot.appendChild(templNoteNote.content.cloneNode(true))
       this._savefile()
     }.bind(this))
+
     contents.addEventListener('click', function onClick (event) {
       if (event.target.tagName === 'IMG') {
         const target = event.target
@@ -116,6 +123,7 @@ class Notes extends HTMLElement {
             index = i
           }
         })
+
         notes.splice(index, 1)
         msgBox.remove()
         this.counter--
@@ -124,6 +132,7 @@ class Notes extends HTMLElement {
         notes = JSON.stringify(notes)
         this.localStorage.setItem(this.localStorageName, notes)
       }
+
       if (event.target.classList.contains('note')) {
         this.disconnectedCallback()
         this.shadowRoot.appendChild(template.content.cloneNode(true))

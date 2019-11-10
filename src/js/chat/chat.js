@@ -47,9 +47,12 @@ templChatFront.innerHTML = `
 </div>
 </div>
 `
-/*
-The chatApp class
-*/
+/**
+ * Class representing the chat application
+ *
+ * @author Findlay Forsblom <ff222ey@student.lnu.se>
+ * @class
+ */
 export class ChatApp extends HTMLElement {
   constructor () {
     super()
@@ -60,11 +63,11 @@ export class ChatApp extends HTMLElement {
     this.isLoggedIn = true
     this.localStorage = localStorage
   }
-  /*
-  Checks if there is a user already in local storage.
-  If there is it feches the data of the user.
-  If there is not then it creates a new user
-  */
+  /**
+   * Checks if there is a user already in local storage.
+    If there is it feches the data of the user.
+    If there is not then it creates a new user
+   */
 
   connectedCallback () {
     this.userProfile = this.localStorage.getItem(this.storageIdentifier)
@@ -79,10 +82,11 @@ export class ChatApp extends HTMLElement {
     }
   }
 
-  /*
-  where the code jumps to if there is not a new user
-  */
-
+  /**
+ * Where the code jumops to register a user
+ * It checks that the username is not less than 3 characters or empty
+ * @param {string} button - takes in the join button as an argument
+ */
   _onNewUser (button) {
     const bind = doThis.bind(this)
     button.addEventListener('click', bind, true)
@@ -105,10 +109,9 @@ export class ChatApp extends HTMLElement {
     }
   }
 
-  /*
-  when there is a user that is ready to chat
-  */
-
+  /**
+ * If there is already a user on local storage the code junmps here
+ */
   async _chat () {
     this.shadowRoot.innerHTML = ''
     this.shadowRoot.append(templMain.content.cloneNode(true))
@@ -132,9 +135,10 @@ export class ChatApp extends HTMLElement {
       this.connectedCallback()
     }.bind(this))
   }
-  /*
- Connects to the socket
-  */
+
+  /**
+    * Connects to the server using socckets
+    */
 
   _connect () {
     const subBox1 = this.shadowRoot.querySelector('.subBox1')
@@ -160,9 +164,7 @@ export class ChatApp extends HTMLElement {
       function doThis (event) {
         let recieved = event.data
         recieved = JSON.parse(recieved)
-        console.log('Message from server ', recieved)
         if (recieved.data === 'You are connected!') {
-          console.log(this)
           this.connected = true
           resolve()
         }
@@ -173,9 +175,10 @@ export class ChatApp extends HTMLElement {
     })
   }
 
-  /*
-  Sends message
-  */
+  /**
+   * Sends message that is gotten form the text area
+   * It also checks to make sure that the value is not empty
+   */
 
   _sendMessage () {
     const textArea = this.shadowRoot.querySelector('.message')
@@ -192,10 +195,11 @@ export class ChatApp extends HTMLElement {
     }.bind(this), true)
   }
 
-  /*
-  Displays messages recieved by the socket
-  */
-
+  /**
+   * Has the function of getting the message recieved from the server and displaying it
+   * @param {Object} recieved - The JSON object recieved from the server
+   * @param {Object} subBox1 - The div element that parents all messages
+   */
   _displayMessage (recieved, subBox1) {
     let messageBox = document.getElementById('msgBox')
     messageBox = messageBox.content.cloneNode(true)
@@ -213,13 +217,13 @@ export class ChatApp extends HTMLElement {
     if (recieved.data.trim().length > 0) {
       message.textContent = recieved.data
       subBox1.append(messageBox)
+      subBox1.scrollTop = subBox1.scrollHeight
     }
   }
 
-  /*
-  What happens when the app is removed fron the dom
-  */
-
+  /**
+ * Closes the socket whenever the chat is removed from the dom
+ */
   disconnectedCallback () {
     if (this.socket !== null) {
       this.socket.close()

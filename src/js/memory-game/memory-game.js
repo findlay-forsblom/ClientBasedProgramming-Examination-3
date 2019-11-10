@@ -33,9 +33,15 @@ templForSelect.innerHTML = `
   </div>
 </div>
 `
-/*
-  This is the main module for the memory game
-  */
+/**
+ * Class representing Memory game
+ * Features include:
+ * Playing with arrow keys and w a s d keys
+ * Fancy Animations
+ * Timer
+ * @author Findlay Forsblom <ff222ey@student.lnu.se>
+ * @class
+ */
 
 export class Memorygame extends HTMLElement {
   constructor () {
@@ -51,8 +57,11 @@ export class Memorygame extends HTMLElement {
     const button = this.shadowRoot.querySelector('button')
     this._onStart(button, element)
   }
-  /*
-  Listens and check for the game size selected by the user
+
+  /**
+  * This functions listens for the game size input and starts the game
+  * @param {Object} button - The start button from the DOM
+  * @param {Object} element  - The options list from the DOM
   */
 
   _onStart (button, element) {
@@ -68,9 +77,9 @@ export class Memorygame extends HTMLElement {
     }
   }
 
-  /*
-  Gets and saves all images needed in an array
-  */
+  /**
+   * Gets all images needed and saves them in an array
+   */
 
   _getAllImages () {
     const AllImages = []
@@ -85,9 +94,10 @@ export class Memorygame extends HTMLElement {
     return AllImages
   }
 
-  /*
-  Gets random card fromm the array depending on the game size
-  */
+  /**
+   * Gets random images from the array containing all images
+   * @param {string} value - The seleccted game size in string format
+   */
 
   _getCards (value) {
     const lol = this._getAllImages()
@@ -95,28 +105,18 @@ export class Memorygame extends HTMLElement {
       const arr2x2 = []
       this._takeRandomCards(lol, arr2x2, 2)
       this._shuffle(arr2x2)
-      arr2x2.forEach((img) => {
-        console.log(img)
-      })
       this._startGame(value, arr2x2)
       this.steg = 2
     } else if (value === '2x4') {
       const arr2x4 = []
       this._takeRandomCards(lol, arr2x4, 4)
       this._shuffle(arr2x4)
-      arr2x4.forEach((img) => {
-        console.log(img)
-      })
       this._startGame(value, arr2x4)
       this.steg = 2
     } else if (value === '4x4') {
       const arr4x4 = []
       this._takeRandomCards(lol, arr4x4, 8)
       this._shuffle(arr4x4)
-      arr4x4.forEach((img) => {
-        console.log(img)
-      })
-      console.log(arr4x4)
       this._startGame(value, arr4x4)
       this.steg = 4
     }
@@ -134,13 +134,12 @@ export class Memorygame extends HTMLElement {
     }
   }
 
-  /*
-  The method that starts the game when all images have been seletted from the array
-  */
+  /**
+   * Initiates the game with the help of a subclass
+   */
 
   _startGame (size, arr) {
     this.arr = arr
-    // const templ = document.getElementById('main')
     this.shadowRoot.innerHTML = ''
     this.shadowRoot.appendChild(templMain.content.cloneNode(true))
     let timeTag = this.shadowRoot.querySelector('p')
@@ -156,6 +155,12 @@ export class Memorygame extends HTMLElement {
   /*
   Controlls the Game
   */
+
+  /**
+   * The main function responsible for game flow
+   * Also included code for making keyboard possible
+   * @param {Object} game - The Game object
+   */
 
   _gameController (game) {
     const main = this.shadowRoot.querySelector('.cards')
@@ -212,7 +217,6 @@ export class Memorygame extends HTMLElement {
       To prevent errors from being shown in the console when a user clicks on a
       brick that is hidden or not part of the game
       */
-      console.log(target.parentNode.parentNode)
       if (target.classList.contains('flex-rows')) {
         return
       }
@@ -220,8 +224,10 @@ export class Memorygame extends HTMLElement {
       this._orElse(game, target)
     }
 
+    /**
+     * called when the game is over
+     */
     function gameOver () {
-      console.log('Game Over')
       this.player.numberOfAttempts = this.clicks / 2
       setTimeout(() => {
         game.stop()
@@ -239,6 +245,12 @@ export class Memorygame extends HTMLElement {
     }
   }
 
+  /**
+ * Since i am using fancy animations with front and back divs i would like to
+ * get the parent box and this functions helps with that
+ * @param {object} game - The game object
+ * @param {object} target - The dom element that has been clicked
+ */
   _orElse (game, target) {
     const stop = this.shadowRoot.querySelector('.container')
     const box = this._recurssionUp(target, stop) || this._recurssiondown(stop)
@@ -261,6 +273,12 @@ export class Memorygame extends HTMLElement {
     })
     return index
   }
+
+  /**
+   * The function that checks if two clicked images match and then flips them back if they dont't
+   * @param {object} box - The div element that contains the image that has been clicked / flipped
+   * @param {object} game - The game object
+   */
 
   _handle (box, game) {
     box.classList.toggle('flip')
@@ -302,18 +320,11 @@ export class Memorygame extends HTMLElement {
       }, 600)
     }
   }
-  /*
-    The recurssionUp and recurssionDown are used to find the div class that contains 'box'
-  */
 
-  _getParentNode (img) {
-    const parent = img.parentNode
-    if (parent.classList.contains('box')) {
-      return parent
-    } else {
-      return this._getParentNode(parent)
-    }
-  }
+  /*
+    The recurssionUp and recurssionDown are both called in the _orElse function.
+    They both used recursion used find the div class that contains 'box'
+  */
 
   _recurssionUp (target, stop) {
     let currentNode = target
@@ -334,6 +345,18 @@ export class Memorygame extends HTMLElement {
     } else {
       current = current.firstElementChild
       return this._recurssionUp(current)
+    }
+  }
+  /**
+ * gets parentNode of the img also using recurssion
+ */
+
+  _getParentNode (img) {
+    const parent = img.parentNode
+    if (parent.classList.contains('box')) {
+      return parent
+    } else {
+      return this._getParentNode(parent)
     }
   }
 

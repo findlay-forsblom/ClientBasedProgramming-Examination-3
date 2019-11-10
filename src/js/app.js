@@ -2,10 +2,17 @@ import './chat/chat.js'
 import './memory-game/memory-game.js'
 import './notes/note-app.js'
 
-/*
-  Used by the Chat Application
-  */
+/**
+ * @author Findlay Forsblom <ff222ey@student.lnu.se>
+ * Controls the application can be seen as the PWD
+ * It also creates the window object that all other applications inherit
+ * It is also responsible for making the different windows move
+ */
 
+/**
+ * Used by the Chat Application
+  * @param {string} user - Takes in the name of the user
+  */
 export function User (user) {
   this.name = user
   this.isLoggedIn = false
@@ -23,13 +30,14 @@ let focusedApps = []
 let count = 0
 let recents = document.querySelector('.recents')
 recents = recents.firstElementChild
-const miniWindow = document.querySelector('#programs')
+const miniWindow = document.querySelector('#programs') // The miniwindow att the bottom of page that contains minimised windows
 const body = miniWindow.querySelector('.programsBody')
 const numberOfApp = document.querySelector('#numbers')
-console.log(numberOfApp)
 
-/*
- footer eventlistener
+/**
+  * Thw footer is where the icons for the different applications are located.
+  * instead of putting an eventlistener on each an every icon i put one on the
+  * footer instead.
   */
 
 footer.addEventListener('click', function onClick (event) {
@@ -65,6 +73,7 @@ footer.addEventListener('click', function onClick (event) {
     div.focus()
     eventListener(div, header)
     currentApps.push(div)
+    miniWindow.classList.add('hide')
   } else if (clickedItem === recents) {
     miniWindow.classList.toggle('hide')
     miniWindow.style.zIndex = ++zIndex
@@ -72,6 +81,9 @@ footer.addEventListener('click', function onClick (event) {
   }
 })
 
+/**
+ * This method handles the referencing of mininised windows
+ */
 function minimize () {
   body.innerHTML = ''
   minimizedApps.forEach((element, i) => {
@@ -86,6 +98,9 @@ function minimize () {
   })
 }
 
+/**
+ * The function responsible for displaying clicked minimised window objects
+ */
 miniWindow.addEventListener('click', function onClick (event) {
   if (event.target.classList.contains('item')) {
     if (focusedApps.length > 0) {
@@ -116,6 +131,10 @@ miniWindow.addEventListener('click', function onClick (event) {
   miniWindow.style.zIndex = ++zIndex
   miniWindow.classList.add('hide')
 })
+
+/**
+ * When you hover over a minimised object. The method responsible for focusing on those elements
+ */
 
 miniWindow.addEventListener('mouseover', function onMouseOver (event) {
   let app
@@ -171,6 +190,12 @@ main.addEventListener('click', function listening (e) {
   Also responsible for moving the window
   */
 
+/**
+ * This is the function responsible for moving window objects
+ * @param {obejct} div - The div element that is to be moved
+ * @param {*} header - The header or top part of that div element. Making it possible to only a drag an item on the header
+ */
+
 function eventListener (div, header) {
   div.addEventListener('mousedown', mouseDown, true)
   function mouseDown (e) {
@@ -198,7 +223,6 @@ function eventListener (div, header) {
       div.focus()
 
       if (div.getBoundingClientRect().y < 0) {
-        this.console.log('it happened')
         div.style.top = `${10}px`
       }
 
@@ -207,19 +231,26 @@ function eventListener (div, header) {
       const mains = main.getBoundingClientRect()
       const lastBottomDiv = div.getBoundingClientRect().bottom
       const lastBottomMain = mains.bottom
-      this.console.log(div.getBoundingClientRect())
-      this.console.log(mains)
       checkIfTouched(lastBottomDiv, lastBottomMain, div)
       checkIfTouchedSides(mains, div)
     })
   }
 }
+
+/**
+ * This prevents the whole PWD from going up down when playing with the keyboard in the
+ * memory game
+ */
 window.addEventListener('keydown', function (e) {
   if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
     e.preventDefault()
   }
 }, false)
 
+/**
+ * Uses recurssion to find the parent window object of a node
+ * @param {object} node - The child node that the parent window object should be gotten
+ */
 function getParentNode (node) {
   const parent = node.parentNode
   if (parent.classList.contains('drag')) {
@@ -229,11 +260,15 @@ function getParentNode (node) {
   }
 }
 
+/**
+ * It checks if a window objects is going of the Desktop
+ * @param {object} mains - The upper part of the desktop
+ * @param {*} div - The window object
+ */
 function checkIfTouchedSides (mains, div) {
-  if (div.getBoundingClientRect().right - mains.right > 132 ) {
+  if (div.getBoundingClientRect().right - mains.right > 132) {
     lastX = 5
     lastY = 10
-    console.log('lol')
   }
 }
 

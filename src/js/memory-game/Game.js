@@ -3,6 +3,16 @@ import { unknown } from './functions.js'
   A dependencie of memory-game module
   Printing the game is its main objective
   */
+
+/**
+ * A dependencie of memory-game module
+ * @param {string} gameSize - The gameSize
+ * @param {string} shadowRoot - The shadowroot
+ * @param {object[]} arr - Array containing selected images
+ * @param {object} event - custom event created
+ * @param {object} eventTarget - used with the custom event
+ * @param {object} player - The player object
+ */
 export default function Game (gameSize, shadowRoot, arr, event, eventTarget, player) {
   this.gameSize = gameSize
   this.shadowRoot = shadowRoot
@@ -23,10 +33,9 @@ export default function Game (gameSize, shadowRoot, arr, event, eventTarget, pla
     }
   }
 
-  /*
-  Genereates the matrix dependinf on the given game size
-  */
-
+  /**
+   * Draws the matrix depending on the game size
+   */
   const matrixGen = function (rows, columns, main) {
     let index = 0
     const boolean = false
